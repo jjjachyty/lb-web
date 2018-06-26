@@ -118,34 +118,34 @@
         </v-flex>
       </v-layout>
     </v-container>
- <v-dialog v-model="dialog" persistent max-width="500px">
+ <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">报价单</span>
+          <span class="headline">报价单</span><span>{{orderAmount}}</span>
         </v-card-title>
         <v-card-text>
-            <v-card  v-for="(product,index) in item.products" >
+            <v-card v-if="quotationOrder"  v-for="(product,index) in item.products" :key="product.id">
          <v-layout row wrap justify-center align-center >
-             <v-flex xs8 >
+             <v-flex xs8 md5>
                  <span class="title red--text">{{index+1}}.</span>
                  名称:<span class="grey--text caption">{{product.name}}</span>
 
              </v-flex>
-             <v-flex xs4>
+             <v-flex xs4 md1>
                                  数量:<span class="grey--text caption">{{product.quantity}}</span>
 
              </v-flex>
              
-             <v-flex xs5 class="text-xs-center">报价:</v-flex>
-              <v-flex xs5>
-                 <v-text-field single-line  type="number" placeholder="代购价格"></v-text-field>
+             <v-flex xs5 class="text-xs-center" md2>报价:</v-flex>
+              <v-flex xs5 md2>
+                 <v-text-field prefix="¥" single-line  type="number" :placeholder="product.price" v-model="quotationOrder.products[index].price" clearable ></v-text-field>
                 </v-flex>
          </v-layout>
          <v-divider></v-divider>
                       </v-card>
 
          <v-layout>
-                         <v-flex xs12> <v-card-title>代购费(包邮):<v-text-field type="number" placeholder=""></v-text-field></v-card-title></v-flex>
+                         <v-flex xs12> <v-card-title>代购费(包邮):<v-text-field prefix="¥" v-model="quotationOrder.charge" type="number" placeholder=""></v-text-field></v-card-title></v-flex>
 
          </v-layout>
         </v-card-text>
@@ -169,7 +169,12 @@ import { avatarRoot } from '@/config'
       data(){
           return {dialog:true,
               avatarRoot:avatarRoot,
-              item:{}
+              item:{},
+              // orderAmount:{},
+              quotationOrder:{
+                products:[],
+                charge:0
+              }
           }
       },
     methods:{
@@ -177,19 +182,35 @@ import { avatarRoot } from '@/config'
             this.$http.get("/purch/get",{id:this.$route.params.id}).then(res=>{
                 if(res.data.Status){
                     this.item = res.data.Data
+                    this.quotationOrder.products =JSON.parse( JSON.stringify(this.item.products))
                 }
             }).catch(res=>{
 
             })
         }
     },
-    
+    computed:{
+      orderAmount:()=>{
+        var amount = 0 
+        console.log("Xxx")
+        if (this.quotationOrder){
+        for (product in this.quotationOrder.products){
+            amount += product.price
+        }
+        amount+= this.quotationOrder.charge
+        return amount
+      }
+      }
+    },
     created(){
             if (!this.$route.params.item){
                 this.getDetail(this.$route.params.id)
             }else{
                 this.item = this.$route.params.item
             }
+    },
+    watch:{
+
     }
 }
 </script>
