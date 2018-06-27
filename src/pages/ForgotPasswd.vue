@@ -99,6 +99,7 @@
 <script>
 import {mapActions} from 'vuex'
 import {Mixin} from '../mixins'
+import {apiRoot} from '@/config'
 import { validationMixin } from 'vuelidate'
 import { required, sameAs, minLength,maxLength,phone } from 'vuelidate/lib/validators'
 
@@ -235,7 +236,7 @@ this.$v.$touch()
     },
     created(){
       this.register.captchaId = this.uuid(8,16)
-      this.captchaUrl = "http://127.0.0.1:9090/api/v1/captcha/"+this.register.captchaId
+      this.captchaUrl = apiRoot+"/captcha/"+this.register.captchaId
     }
   }
 </script>

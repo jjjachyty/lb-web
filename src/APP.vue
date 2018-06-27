@@ -108,7 +108,7 @@ color: transparent;
 background-color: white;
 
 }
-@media screen and (min-width: 320px) and (max-width: 480px) {
+@media screen and (max-width: 600px) {
    .markdown-body img {
   max-width: 100% !important;
   box-sizing: content-box;
@@ -119,7 +119,7 @@ background-color: white;
 }
 
 }
-@media screen and (min-width: 960px){
+@media screen and (min-width: 960px)  and (max-width: 1264px){
    .markdown-body img {
   max-width: 50% !important;
   box-sizing: content-box;
@@ -127,6 +127,28 @@ background-color: white;
 }
 .container{
   padding:24px;
+}
+
+}
+@media screen and (min-width: 1264px)  and (max-width: 1904px){
+   .markdown-body img {
+  max-width: 50% !important;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+.container{
+  padding:0 50px 0 50px;
+}
+
+}
+@media screen and (min-width: 1904px){
+   .markdown-body img {
+  max-width: 50% !important;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+.container{
+  padding:50px;
 }
 
 }

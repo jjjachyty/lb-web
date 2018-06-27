@@ -19,7 +19,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <a href="forgot" class="white--text caption">忘记密码?</a>
+                <v-btn flat="" to="forgot" class="white--text caption">忘记密码?</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary"  outline @click="submit"  :disabled="this.$v.$invalid">登录</v-btn>
               </v-card-actions>

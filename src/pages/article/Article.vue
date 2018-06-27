@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-
 <br/>
       <v-card v-if="article.id">
         <v-avatar class="avatar-auth" size="70" color="grey lighten-4">
