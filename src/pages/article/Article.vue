@@ -1,6 +1,8 @@
 <template>
-    <div class="container">
-<br/>
+    <v-layout row >
+      <v-flex md6 offset-md3>
+
+
       <v-card v-if="article.id">
         <v-avatar class="avatar-auth" size="70" color="grey lighten-4">
           <img v-if="article.nickNamePublish" :src="'/static/avatar/'+article.nickName+'.png'" alt="avatar">
@@ -278,10 +280,8 @@
 
     </v-dialog>
 
-
-
-    </div>
-
+</v-flex>
+    </v-layout>
 </template>
 <script>
 import Ads from '@/pages/Ads'

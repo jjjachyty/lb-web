@@ -61,6 +61,7 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "utf8": "^3.0.0",
+    "v-viewer": "^1.0.1",
     "vc-popup": "^1.1.20",
     "vue-carousel": "^0.8.1",
     "vue-loader": "^13.3.0",

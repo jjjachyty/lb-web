@@ -1,7 +1,7 @@
 <template>
 <v-app>
-  <div class="container">
-    
+  <v-layout row>
+    <v-flex offset-md2 md8>
   <v-container>
               <v-text-field
          solo
@@ -14,7 +14,7 @@
          placeholder="请输入关键字">
       </v-text-field>    
    </v-container>
-
+<br>
     <v-layout row wrap="">
 
 
@@ -43,7 +43,8 @@
     </v-fab-transition>
 
     </v-layout>
-  </div>
+    </v-flex>
+  </v-layout>
   </v-app>
 
 </template>

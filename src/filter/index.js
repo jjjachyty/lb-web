@@ -15,7 +15,7 @@ Vue.filter('dict', function(value, key) {
     }
 })
 Vue.filter('formatDate', function(value, key) {
-    return moment(value).utc().format(key);
+    return moment(value).format(key);
 })
 
 Vue.filter('formatContent', function(value, key) {

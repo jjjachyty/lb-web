@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-container grid-list-xs>
+
       <v-layout row wrap>
 
         <v-flex md6 offset-md1 xs12>
@@ -69,10 +69,12 @@
                   </v-card-title>
                   <v-layout>
 
-                    <v-flex md2 xs2>
-                      <a :href="pd.images">
-                        <img :src="pd.images" height="100px"></img>
-                      </a>
+                    <v-flex md2 xs2 >
+                           <div v-viewer="options" class="images clearfix">
+                            <img :src="pd.images" :data-source="pd.images" class="image" height="100px">
+                        </div>
+                        <!-- <img :src="pd.images" height="100px" v-viewer> -->
+                    
                     </v-flex>
                     <v-flex md10 xs10>
                       <v-layout row wrap class="caption">
@@ -107,7 +109,7 @@
                 </v-chip>
               </span>
               <v-spacer></v-spacer>
-              <v-btn small outline color="red" @click="dialog=true">代购</v-btn>
+              <v-btn small outline color="red" @click="dialog=true">代购报价</v-btn>
 
               <br>
             </v-card-actions>
@@ -116,8 +118,70 @@
           <v-card>
 
           </v-card>
+          <br>
+          <!-- 报价单-->
+          <v-subheader>报价单</v-subheader>
+          <v-expansion-panel>
+          <v-expansion-panel-content v-for="(qo,sq) in item.quotationOrders" :key="qo.id">
+            <div slot="header">
+              <v-layout row wrap>
+                <v-flex md1 xs12><span class="title" >{{sq+1}}.<span class="red--text body-2">¥{{qo.amount}}</span></span></v-flex>
+                <v-flex md1 xs3><v-avatar><img :src="avatarRoot+qo.buyByID"></v-avatar></v-flex>
+                <v-flex md9 xs7>
+                  <v-layout row wrap>
+                    <v-flex md12 xs12>{{qo.buyByName}}</v-flex>
+                     <v-flex md4 xs12><span class="caption grey--text">截止{{qo.expiryTime |formatDate('YYYY-MM-DD HH:mm')}}</span></v-flex>
+                  </v-layout>
+                </v-flex>
+                <v-flex md1 xs3 ></v-flex>
+
+              </v-layout>
+               
+            </div>
+          <v-card> 
+            <v-card-text class="quotation-content">
+                <v-card v-if="quotationOrder" v-for="(product,index) in qo.products" :key="product.id" class="quotation-item">
+            <v-layout row wrap align-center>
+              <v-flex xs1 md1>
+                <span class="body-1 red--text">({{index+1}}).</span>
+              </v-flex>
+              <v-flex md2 xs3>
+                 <div v-viewer="options" class="images clearfix">
+                            <img :src="product.images" :data-source="product.images" class="image" height="100px">
+                        </div>
+              </v-flex>
+              <v-flex xs8>
+                <v-layout row wrap>
+                  <v-flex md3 xs6>
+                名称:<span class="grey--text caption">{{product.name}}</span>
+              </v-flex>
+              <v-flex xs6 md1>
+                数量:<span class="grey--text caption">{{product.quantity}}</span>
+              </v-flex>
+              <v-flex xs6 md2 >渠道:{{product.shopName}}</v-flex>
+             
+              <v-flex xs6 md2>报价:<span class="red--text">¥{{product.price}}</span></v-flex>
+                </v-layout>
+              </v-flex>
+              
+              
+            </v-layout>
+            <v-divider></v-divider>
+          </v-card>
+            </v-card-text>
+            <v-divider></v-divider>
+               <v-card-actions>
+                 <div class="container text-xs-center" >
+                 <v-btn  color="primary" @click="refuse(qo)">拒绝</v-btn>
+                 
+              <v-btn  color="secondary" @click="purchase(qo)">代购</v-btn>
+              </div>
+               </v-card-actions>
+          </v-card>
+           </v-expansion-panel-content>
+  </v-expansion-panel>
         </v-flex>
-        <v-flex md5>
+        <v-flex md3>
           <v-card>
             <v-card-title>
               <span>其他 澳门 代购</span>
@@ -128,7 +192,8 @@
           </v-card>
         </v-flex>
       </v-layout>
-    </v-container>
+   
+   
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -160,25 +225,25 @@
               <v-flex xs2 md5>
                 <span class="grey--text caption">{{product.quantity}}</span>
               </v-flex>
-              <v-flex xs2 md1 offset-xs1>渠道:</v-flex>
-              <v-flex xs8 md4>
-                <v-text-field type="number" placeholder="购买店名称" v-model="quotationOrder.shopName" clearable></v-text-field>
+              <!-- <v-flex xs2 md1 offset-xs1>渠道:</v-flex> -->
+              <v-flex xs8 md4 offset-xs1>
+                <v-text-field  placeholder="购买店名称" prepend-icon="shop" label="渠道" v-model="product.shopName" clearable></v-text-field>
               </v-flex>
-              <v-flex xs2 md1 offset-xs1>报价:</v-flex>
-              <v-flex xs8 md4>
-                <v-text-field prefix="¥" single-line type="number" :placeholder="product.price+''" v-model="quotationOrder.products[index].price"
+              <!-- <v-flex xs2 md1 offset-xs1>报价:</v-flex> -->
+              <v-flex xs8 md4 offset-xs1>
+                <v-text-field prefix="¥" label="报价" prepend-icon="money"  :placeholder="product.price+''" v-model.number="quotationOrder.products[index].price"
                   clearable></v-text-field>
               </v-flex>
             </v-layout>
             <v-divider></v-divider>
           </v-card>
-
+<br>
           <v-layout>
-            <v-flex xs12 md5>
+            <v-flex xs12 >
               <v-card>
                 <v-layout row wrap align-center>
-                  <v-flex>
-                    <v-text-field min="0" prepend-icon="money" v-model="quotationOrder.charge" type="number" label="代购费(包邮):" clearable placeholder="包邮代购费"></v-text-field>
+                  <v-flex xs12>
+                    <v-text-field min="0" prepend-icon="money" v-model.number="quotationOrder.charge" type="number" label="代购费(包邮):" clearable placeholder="包邮代购费"></v-text-field>
                   </v-flex>
                   <v-flex>
                     <v-dialog ref="dialog" v-model="timeDialog" :return-value.sync="quotationOrder.expiryTime" persistent lazy
@@ -201,13 +266,14 @@
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="dialog = false">取消</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="primary darken-1" flat @click.native="dialog = false">确定</v-btn>
+          <v-btn color="primary darken-1" flat @click.native="saveQuotation">确定</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-app>
 </template>
 <script>
+import 'viewerjs/dist/viewer.css'
 import { Carousel, Slide } from 'vue-carousel';
 import { avatarRoot } from '@/config'
   export default {
@@ -219,11 +285,27 @@ import { avatarRoot } from '@/config'
           return {dialog:true,
           timeDialog:false,
               avatarRoot:avatarRoot,
-              item:{},
-              //  orderAmount:0,
+              item:{id:""},
+              quotationOrders:[],
               quotationOrder:{
                 products:[],
-                charge:null
+                charge:0,
+              },
+              options:{
+                inline: false,
+        button: true,
+        navbar: false,
+        title: false,
+        toolbar: true,
+        tooltip: true,
+        movable: true,
+        zoomable: true,
+        rotatable: true,
+        scalable: true,
+        transition: true,
+        fullscreen: true,
+        keyboard: true,
+        url: 'data-source'
               }
           }
       },
@@ -237,6 +319,24 @@ import { avatarRoot } from '@/config'
             }).catch(res=>{
 
             })
+        },
+        saveQuotation(){
+          this.quotationOrder.purchaseID = this.item.id
+          this.$http.postJson("/purch/quotation",this.quotationOrder).then(res=>{
+            if (res.data.Status){
+              console.log("保存报价单",res.data)
+              this.item.quotationOrders.push(this.quotationOrder)
+            }
+          }).catch(res=>{
+
+          })
+
+          this.dialog = false
+        },
+        purchase(quotation){
+            console.log("purchase quotation",quotation)
+        },refuse(quotation){
+          console.log("purchase quotation",quotation)
         }
     },
     computed:{
@@ -274,5 +374,11 @@ import { avatarRoot } from '@/config'
     height: 100px;
     width: 100px;
 }
-
+.quotation-content{
+padding: 0 1% 0 6%;
+}
+.quotation-item{
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 0px 0.1px grey !important
+}
 </style>

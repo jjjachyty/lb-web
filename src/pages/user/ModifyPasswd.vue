@@ -4,14 +4,14 @@
             <v-card>
             <v-layout row align-center justify-center wrap>
                 <v-flex md7 xs12 v-if="modifyType != 4">
-                    <v-text-field prepend-icon="fa-key" v-model="modifyPasswd.orgPasswd" @input="$v.modifyPasswd.orgPasswd.$touch()" @blur="$v.modifyPasswd.orgPasswd.$touch()" :error-messages="orgPasswdErrors" label="原密码"></v-text-field>
+                    <v-text-field prepend-icon="fa-key" :append-icon="e ? 'visibility_off' : 'visibility'" :append-icon-cb="() => (e = !e)" :type="e ? 'password' : 'text'" v-model="modifyPasswd.orgPasswd" @input="$v.modifyPasswd.orgPasswd.$touch()" @blur="$v.modifyPasswd.orgPasswd.$touch()" :error-messages="orgPasswdErrors" label="原密码"></v-text-field>
                 </v-flex>
                 <v-flex md7 xs12>
-                                        <v-text-field v-model="modifyPasswd.newPasswd" @input="$v.modifyPasswd.newPasswd.$touch()" @blur="$v.modifyPasswd.newPasswd.$touch()" :error-messages="newPasswdErrors" prepend-icon="fa-exchange-alt" label="新密码"></v-text-field>
+                                        <v-text-field :append-icon="e ? 'visibility_off' : 'visibility'" :append-icon-cb="() => (e = !e)" :type="e ? 'password' : 'text'" v-model="modifyPasswd.newPasswd" @input="$v.modifyPasswd.newPasswd.$touch()" @blur="$v.modifyPasswd.newPasswd.$touch()" :error-messages="newPasswdErrors" prepend-icon="fa-exchange-alt" label="新密码"></v-text-field>
 
                 </v-flex>
                 <v-flex md7 xs12>
-                                        <v-text-field v-model="modifyPasswd.confirmPasswd" :error-messages="confirmPassswdErrors" @input="$v.modifyPasswd.confirmPasswd.$touch()" @blur="$v.modifyPasswd.confirmPasswd.$touch()" prepend-icon="fa-check-circle" label="确认新密码"></v-text-field>
+                                        <v-text-field :append-icon="e ? 'visibility_off' : 'visibility'" :append-icon-cb="() => (e = !e)" :type="e ? 'password' : 'text'" v-model="modifyPasswd.confirmPasswd" :error-messages="confirmPassswdErrors" @input="$v.modifyPasswd.confirmPasswd.$touch()" @blur="$v.modifyPasswd.confirmPasswd.$touch()" prepend-icon="fa-check-circle" label="确认新密码"></v-text-field>
 
                 </v-flex>
                 <v-flex md6 xs6>
@@ -52,6 +52,7 @@ import { required, sameAs, minLength,maxLength,phone } from 'vuelidate/lib/valid
     },
     data() {
         return {
+            e:true,
             snackbar:false,
             type:"error",
             message:"服务器异常",
@@ -96,6 +97,7 @@ import { required, sameAs, minLength,maxLength,phone } from 'vuelidate/lib/valid
                     
                      this.$store.commit("SUCCESS","密码修改成功")
                      this.disable = true
+                     this.$store.state.auth={}
                      setTimeout(()=>{
                          this.$router.push("login")
                      },1000)

@@ -12,8 +12,9 @@ import Croppa from 'vue-croppa';
 import 'vue-croppa/dist/vue-croppa.css';
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
-
+//图片预览
+import Viewer from 'v-viewer'
+Vue.use(Viewer)
 
 import VueShowdown from 'vue-showdown'
 Vue.component('VueShowdown', VueShowdown)
@@ -24,8 +25,8 @@ Vue.use(Croppa);
 
 Vue.use(Vuetify, {
     theme: {
-        primary: '#FF5722',
-        secondary: '#424242',
+        primary: '#009688',
+        secondary: '#FF5722',
         accent: '#82B1FF',
         error: '#FF5252',
         info: '#2196F3',

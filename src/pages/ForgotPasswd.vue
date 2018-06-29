@@ -37,7 +37,7 @@
                       <!-- <v-text-field prepend-icon="message" id="captcha" required  :error-messages="smsCodeErrors" name="captcha"  @input="$v.register.smsCode.$touch()"
                     @blur="$v.register.smsCode.$touch()" label="短信验证码" type="number" counter="4" v-model="register.smsCode"></v-text-field>
                      -->
-                                     <v-text-field prepend-icon="message" required name="smsCode" 
+                                     <v-text-field prepend-icon="message" :error-messages="smsCodeErrors"  @blur="$v.register.smsCode.$touch()" required name="smsCode" 
                      label="短信验证码" type="text" v-model="register.smsCode"></v-text-field>
    
                     </v-flex>
@@ -109,7 +109,8 @@ import { required, sameAs, minLength,maxLength,phone } from 'vuelidate/lib/valid
       register:{
       phone: { required, phoneRule(v){
         return /^[1][3,4,5,7,8][0-9]{9}$/.test(v)
-      }}
+      }},
+      smsCode:{required,minLength,maxLength}
       },
       
 
@@ -136,6 +137,13 @@ import { required, sameAs, minLength,maxLength,phone } from 'vuelidate/lib/valid
         if (!this.$v.register.phone.$dirty) return errors
         ! this.$v.register.phone.phoneRule&& errors.push('手机号格式不正确')
         !this.$v.register.phone.required && errors.push('手机号不能为空')
+        return errors
+      },
+      smsCodeErrors () {
+        const errors = []
+        if (!this.$v.register.smsCode.$dirty) return errors
+        ! this.$v.register.smsCode.minLength(4) && errors.push('验证码格式错误')
+        !this.$v.register.smsCode.required && errors.push('验证码不能为空')
         return errors
       }
       
@@ -229,6 +237,8 @@ this.$v.$touch()
         this.loading = false
         })
        
+         }else{
+           this.$store.commit("ERROR","表单信息错误")
          }
 
       

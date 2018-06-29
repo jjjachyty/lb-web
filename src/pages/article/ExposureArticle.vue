@@ -33,7 +33,6 @@
                            <div ><v-switch color="primary"
       :label="`${aritcle.nickNamePublish?'匿名发布(建议)':'实名发布(不建议)'}`"
       v-model="aritcle.nickNamePublish"
-      :disabled="!$store.state.User.user.idCardValid"
     ></v-switch>
     </div>
                         <v-text-field  :error-messages="titleErrors" v-model="aritcle.title" label="标题" prepend-icon="title" required class="title" placeholder="例：我被XX地方XX店被坑记录，提醒大家注意" maxlength="34" counter="34"></v-text-field>

@@ -1,7 +1,7 @@
 <template>
     <v-app>
         
-                  <div class="container">
+    
 
         <!-- <v-tabs grow height="70" fixed-tabs  icons-and-text centered>
             <v-tabs-slider color="deep-orange"></v-tabs-slider>
@@ -18,7 +18,7 @@
                        <List></List>
         <!-- </v-tab-item>
         </v-tabs> -->
-         </div>
+         
 
           
     </v-app>

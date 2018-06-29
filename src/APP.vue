@@ -137,7 +137,7 @@ background-color: white;
   background-color: #fff;
 }
 .container{
-  padding:0 50px 0 50px;
+  padding:0 10% 0 10%;
 }
 
 }
@@ -148,7 +148,7 @@ background-color: white;
   background-color: #fff;
 }
 .container{
-  padding:50px;
+  padding:3% 20% 0 20%;
 }
 
 }
