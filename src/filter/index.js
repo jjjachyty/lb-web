@@ -2,6 +2,8 @@ import Vue from 'vue'
 import moment from 'moment'
 moment.locale();
 const rechargeType = { 0: "银行转账", 1: "微信", 2: "支付宝" }
+const purchaseState = { 0: "待接单", 1: "待确认", 2: "已确认", 3: "已购买", 4: "已发货" }
+
 Vue.filter('dict', function(value, key) {
     console.log("dict", key, value)
     switch (key) {
@@ -9,7 +11,10 @@ Vue.filter('dict', function(value, key) {
             console.log("rechargeType", value, key)
             return rechargeType[value]
             break;
-
+        case 'purchaseState':
+            console.log("purchaseState", value, key)
+            return purchaseState[value]
+            break;
         default:
             break;
     }

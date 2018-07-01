@@ -4,7 +4,7 @@
 
       <v-layout row wrap>
 
-        <v-flex md6 offset-md1 xs12>
+        <v-flex md7 offset-md1 xs12>
           <v-card>
             <v-card-title>
               <v-layout row wrap>
@@ -37,7 +37,7 @@
                   <span>
                     <v-chip small color="red" outline label class="white--text body-2">
                       <small class="caption">¥</small>{{item.amount}}</v-chip>
-
+                      <small>{{item.state | dict('purchaseState')}}</small>
                   </span>
 
                 </v-flex>
@@ -123,17 +123,32 @@
           <v-subheader>报价单</v-subheader>
           <v-expansion-panel>
           <v-expansion-panel-content v-for="(qo,sq) in item.quotationOrders" :key="qo.id">
-            <div slot="header">
+            <div slot="header" v-bind:class="{'grey--text':qo.state == '0'}">
               <v-layout row wrap>
-                <v-flex md1 xs12><span class="title" >{{sq+1}}.<span class="red--text body-2">¥{{qo.amount}}</span></span></v-flex>
-                <v-flex md1 xs3><v-avatar><img :src="avatarRoot+qo.buyByID"></v-avatar></v-flex>
-                <v-flex md9 xs7>
+
+                                <v-flex md1 xs2>
+                <v-avatar size="40"><img :src="avatarRoot+qo.buyByID"></v-avatar>
+                
+                  </v-flex>
+
+           
+
+
+                <v-flex md6 xs4>
                   <v-layout row wrap>
-                    <v-flex md12 xs12>{{qo.buyByName}}</v-flex>
-                     <v-flex md4 xs12><span class="caption grey--text">截止{{qo.expiryTime |formatDate('YYYY-MM-DD HH:mm')}}</span></v-flex>
+                    <v-flex md12 xs12 >{{qo.buyByName}}</v-flex>
+                     <v-flex md4 xs12>
+                       <v-icon small>pin_drop</v-icon><small class="caption grey--text">重庆</small>
+                       <!-- /<small class="caption grey--text">3单</small> -->
+                     </v-flex>
                   </v-layout>
+
                 </v-flex>
-                <v-flex md1 xs3 ></v-flex>
+                     <v-flex md3 xs6>
+                  <span v-bind:class="{'red--text':qo.state == '1','caption':true}"><v-icon :color="qo.state=='1'?'red':'grey'" small>timer</v-icon>{{qo.expiryTime |formatDate('HH:mm YYYY/MM/DD')}}前有效</span>
+                  </v-flex>
+                <v-flex md1 xs12 class="text-xs-right text-md-left"><span class="title amount"><span v-bind:class="{'red--text':qo.state == '1','body-2':true}">¥{{qo.amount}}</span></span></v-flex>
+
 
               </v-layout>
                
@@ -141,9 +156,9 @@
           <v-card> 
             <v-card-text class="quotation-content">
                 <v-card v-if="quotationOrder" v-for="(product,index) in qo.products" :key="product.id" class="quotation-item">
-            <v-layout row wrap align-center>
+            <v-layout row wrap align-center v-bind:class="{'grey--text':qo.state == '0'}">
               <v-flex xs1 md1>
-                <span class="body-1 red--text">({{index+1}}).</span>
+                <span class="body-1">({{index+1}}).</span>
               </v-flex>
               <v-flex md2 xs3>
                  <div v-viewer="options" class="images clearfix">
@@ -153,14 +168,14 @@
               <v-flex xs8>
                 <v-layout row wrap>
                   <v-flex md3 xs6>
-                名称:<span class="grey--text caption">{{product.name}}</span>
+                名称:<span class="caption">{{product.name}}</span>
               </v-flex>
-              <v-flex xs6 md1>
-                数量:<span class="grey--text caption">{{product.quantity}}</span>
+              <v-flex xs6 md2>
+                数量:<span class=" caption">{{product.quantity}}</span>
               </v-flex>
               <v-flex xs6 md2 >渠道:{{product.shopName}}</v-flex>
              
-              <v-flex xs6 md2>报价:<span class="red--text">¥{{product.price}}</span></v-flex>
+              <v-flex xs6 md2>报价:<span  v-bind:class="{'red--text':qo.state == '1'}">¥{{product.price}}</span></v-flex>
                 </v-layout>
               </v-flex>
               
@@ -170,9 +185,9 @@
           </v-card>
             </v-card-text>
             <v-divider></v-divider>
-               <v-card-actions>
+               <v-card-actions v-if="qo.state == '1'">
                  <div class="container text-xs-center" >
-                 <v-btn  color="primary" @click="refuse(qo)">拒绝</v-btn>
+                 <v-btn  color="primary" @click="showRefuse(qo)">拒绝</v-btn>
                  
               <v-btn  color="secondary" @click="purchase(qo)">代购</v-btn>
               </div>
@@ -181,7 +196,7 @@
            </v-expansion-panel-content>
   </v-expansion-panel>
         </v-flex>
-        <v-flex md3>
+        <v-flex md4>
           <v-card>
             <v-card-title>
               <span>其他 澳门 代购</span>
@@ -249,7 +264,7 @@
                     <v-dialog ref="dialog" v-model="timeDialog" :return-value.sync="quotationOrder.expiryTime" persistent lazy
                       full-width width="290px">
 
-                      <v-text-field slot="activator" v-model="quotationOrder.expiryTime" label="失效时间:" prepend-icon="access_time" readonly></v-text-field>
+                      <v-text-field slot="activator" v-model="quotationOrder.expiryTime" placeholder="报价截止时间" label="截止时间"  prepend-icon="access_time" readonly></v-text-field>
                       <v-time-picker v-model="quotationOrder.expiryTime" actions>
                         <v-spacer></v-spacer>
                         <v-btn flat color="primary" @click="timeDialog = false">取消</v-btn>
@@ -270,6 +285,21 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+          <v-dialog v-model="refuseFlag" max-width="290">
+      <v-card>
+
+        <v-card-text>
+          <v-text-field v-model="reason" textarea label="理由" placeholder="价格高？渠道非正品？时间太长？"></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click.native="refuseFlag = false">取消</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="refuse">确认</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-app>
 </template>
 <script>
@@ -283,7 +313,10 @@ import { avatarRoot } from '@/config'
       },
       data(){
           return {dialog:true,
+          refuseFlag:false,
           timeDialog:false,
+          reason:"",
+          opQuotationOrder:{},
               avatarRoot:avatarRoot,
               item:{id:""},
               quotationOrders:[],
@@ -326,17 +359,34 @@ import { avatarRoot } from '@/config'
             if (res.data.Status){
               console.log("保存报价单",res.data)
               this.item.quotationOrders.push(this.quotationOrder)
+               this.dialog = false
+            }else{
+              this.$store.commit("ERROR",res.data.Error.Err)
             }
           }).catch(res=>{
 
           })
 
-          this.dialog = false
+         
         },
         purchase(quotation){
             console.log("purchase quotation",quotation)
-        },refuse(quotation){
+        },showRefuse(quotation){ //显示拒绝订单对话框
+        this.refuseFlag = true
+          this.opQuotationOrder = quotation
           console.log("purchase quotation",quotation)
+        },
+        refuse(){ //拒绝该订单
+              this.$http.post("/purch/refuse",{purchaseID:this.item.id,quotationID:this.opQuotationOrder.id,reason:this.reason}).then(res=>{
+                if (res.data.Status){
+                  this.refuseFlag = false
+                  this.$store.commit("SUCCESS","拒绝该报价成功,重新进入报价中")
+                }else{
+                   this.$store.commit("ERROR",res.data.Error.Err)
+                }
+              }).catch(res=>{
+                this.$store.commit("ERROR",res.data)
+              })
         }
     },
     computed:{
@@ -380,5 +430,8 @@ padding: 0 1% 0 6%;
 .quotation-item{
   margin-bottom: 10px;
   box-shadow: 0px 0px 0px 0.1px grey !important
+}
+.amount{
+  float: right;
 }
 </style>
