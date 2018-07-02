@@ -1,7 +1,30 @@
 import moment from 'moment'
 import utf8 from 'utf8'
+import { avatarRoot } from '@/config'
+
 // 定义一个混入对象
 export const Mixin = {
+    data(){
+        return {
+            avatarRoot:avatarRoot,
+            options:{
+                inline: false,
+        button: true,
+        navbar: false,
+        title: false,
+        toolbar: true,
+        tooltip: true,
+        movable: true,
+        zoomable: true,
+        rotatable: true,
+        scalable: true,
+        transition: true,
+        fullscreen: true,
+        keyboard: true,
+        url: 'data-source'
+              }
+        }
+    },
     created: function() {
 
     },

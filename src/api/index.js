@@ -83,6 +83,9 @@ export default {
     postJson(url, params) {
         return axios.post(url, JSON.stringify(params))
     },
+    putJson(url, params) {
+        return axios.put(url, JSON.stringify(params))
+    },
     put(url, params) {
         return axios.put(url, Qs.stringify(params, { arrayFormat: 'brackets' }))
     },
