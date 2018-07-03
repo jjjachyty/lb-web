@@ -224,85 +224,18 @@ import qiniu from 'qiniu'
              console.log("qntoken",res.data.Data)
               if (res.data.Status){
                 var uploadToken = res.data.Data
-                //上传图片
-                //   var config = new qiniu.conf.Config();
-                //   // 空间对应的机房
-                //   config.zone = qiniu.zone.Zone_z2;
-                //   // 是否使用https域名
-                //   //config.useHttpsDomain = true;
-                //   // 上传是否使用cdn加速
-                //   //config.useCdnDomain = true;
-                // var formUploader = new qiniu.form_up.FormUploader(config);
-
-                // var putExtra = new qiniu.form_up.PutExtra();
-                //   console.log("getChosenFile",this.croppa.getChosenFile())
-                //   //上传图片
-                //     formUploader.put(uploadToken, "test.png", this.croppa.generateDataUrl('image/png'), putExtra, function(respErr,
-                //       respBody, respInfo) {
-                //         console.log("图片上传回来了")
-                //       if (respErr) {
-                //         throw respErr;
-                //       }
-                //       if (respInfo.statusCode == 200) {
-                //         console.log(respBody);
-                //       } else {
-                //         console.log(respInfo.statusCode);
-                //         console.log(respBody);
-                //       }
-                //     });uploadToken, file, key
                 var pic = this.croppa.generateDataUrl('image/png')
                 this.$store.dispatch("uploadImages",{uploadToken:uploadToken,file:pic,key:this.$store.state.User.user.id}).then(res=>{
                   resolve()
                 }).catch(res=>{
                   reject()
                 })
-                // var key =new Buffer(this.user.id).toString('base64');
-                //   var url = this.qiniuUpUrl+key; //非华东空间需要根据注意事项 1 修改上传域名
-                //   var xhr = new XMLHttpRequest();
-                //   xhr.onreadystatechange=function(){
-                //     console.log("xhr",xhr)
-                //     if (xhr.readyState==4){
-                //        if (xhr.status == 200) {
-                //          resolve()
-                //        }else{
-                //        that.$store.commit('ERROR', "头像上传失败，请稍后再试,"+xhr.response)
-                //           reject()
-                //        }
-                //     }
-                //   }
-                //   xhr.open("POST", url, true);
-                //   xhr.setRequestHeader("Content-Type", "application/octet-stream;charset=utf-8");
-                //   xhr.setRequestHeader("Authorization", "UpToken "+uploadToken);
-                //   xhr.send(pic);
-                
-
-
               }else{
                 this.$store.commit('ERROR', "获取头像上传Token失败，请稍后再试")
                 reject()
               }
            })
 
-
-
-      // this.croppa.generateBlob((blob) => {
-      //   var fd = new FormData()
-      //   fd.append('file', blob)
-      //   fd.append('other', 'blahblahblah')
-      //   $.ajax({
-      //     url: 'http://www.xxx.com/api/upload',
-      //     data: fd,
-      //     type: 'POST',
-      //     processData: false,
-      //     contentType: false,
-      //     success: function(data) {
-      //       alert(data)
-      //     }
-      //   })
-
-
-
-      // })
     }else{
       this.$store.commit("INFO","请上传自定义头像")
         reject()

@@ -1,12 +1,13 @@
 import moment from 'moment'
 import utf8 from 'utf8'
-import { avatarRoot } from '@/config'
+import { avatarRoot,purchaseRoot } from '@/config'
 
 // 定义一个混入对象
 export const Mixin = {
     data(){
         return {
             avatarRoot:avatarRoot,
+            purchaseRoot:purchaseRoot,
             options:{
                 inline: false,
         button: true,

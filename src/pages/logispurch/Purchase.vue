@@ -11,7 +11,7 @@
 
                 <v-flex xs8 md10>
                   <v-layout row>
-                    <v-flex xs2 md2>
+                    <v-flex xs4 md2>
                       <v-avatar size="50">
                         <img :src="avatarRoot+item.createBy">
                       </v-avatar>
@@ -37,7 +37,7 @@
                   <span>
                     <v-chip small color="red" outline label class="white--text body-2">
                       <small class="caption">¥</small>{{item.amount}}</v-chip>
-                      <small>{{item.state | dict('purchaseState')}}</small>
+                      <small class="red--text">{{item.state | dict('purchaseState')}}</small>
                   </span>
 
                 </v-flex>
@@ -69,7 +69,7 @@
                   </v-card-title>
                   <v-layout>
 
-                    <v-flex md2 xs2 >
+                    <v-flex md2 xs3 >
                            <div v-viewer="options" class="images clearfix">
                             <img :src="pd.images" :data-source="pd.images" class="image" height="100px">
                         </div>
@@ -109,7 +109,7 @@
                 </v-chip>
               </span>
               <v-spacer></v-spacer>
-              <v-btn small outline color="red" @click="dialog=true" v-if="item.createBy != $store.state.User.user.id">代购报价</v-btn>
+              <v-btn small outline color="red" @click="dialog=true" v-if="purchaseFlag">代购报价</v-btn>
 
               <br>
             </v-card-actions>
@@ -160,7 +160,6 @@ import {Mixin} from '@/mixins'
           return {dialog:true,
           refuseFlag:false,
           timeDialog:false,
-          reason:"",
           opQuotationOrder:{},
               // avatarRoot:avatarRoot,
               item:{id:""},
@@ -190,17 +189,18 @@ import {Mixin} from '@/mixins'
         }
     },
     computed:{
-      orderAmount: function () {
-        var amount  = 0.0
-        for (const key in this.quotationOrder.products) {
-          if (this.quotationOrder.products.hasOwnProperty(key)) {
-           amount += Number(this.quotationOrder.products[key].price) 
-            
-          }
-        }
-        
-      return  Number(this.quotationOrder.charge)+Number(amount)
-    }
+      purchaseFlag:function(){
+        var flag = true
+         if(this.item.createBy == this.$store.state.User.user.id){
+            flag = false
+         }
+         this.item.quotationOrders && this.item.quotationOrders.forEach(pd => {
+           if (pd.buyByID == this.$store.state.User.user.id){
+             flag = false
+           }
+         });
+         return flag
+      }
       
     },
     created(){

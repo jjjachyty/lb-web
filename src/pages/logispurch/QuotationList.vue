@@ -13,7 +13,7 @@
            
 
 
-                <v-flex md6 xs4>
+                <v-flex md4 xs4>
                   <v-layout row wrap>
                     <v-flex md12 xs12 >{{qo.buyByName}}</v-flex>
                      <v-flex md4 xs12>
@@ -23,14 +23,24 @@
                   </v-layout>
 
                 </v-flex>
-                     <v-flex md2 xs6>
-                  <span v-bind:class="{'red--text':qo.state == '1','caption':true}"><v-icon :color="qo.state=='1'?'red':'grey'" small>timer</v-icon>{{qo.expiryTime |formatDate('HH:mm YYYY/MM/DD')}}前有效</span>
+                     <v-flex md3 xs6>
+                  <span class="caption"><v-icon :color="qo.state=='1'?'black':'grey'" small>timer</v-icon>{{qo.expiryTime |formatDate('HH:mm YYYY/MM/DD')}}前有效</span>
                   </v-flex>
-                  <v-flex md2 xs6 class="text-xs-center text-md-center"><span v-bind:class="{'red--text':qo.state == '1','caption':true}">{{qo.expiryTime |formatDate('YYYY/MM/DD')}}发货</span></v-flex>
+                  <v-flex md2 xs6 class="text-xs-center text-md-center"><span v-bind:class="{'black--text':qo.state == '1','caption':true}">{{qo.expiryTime |formatDate('YYYY/MM/DD')}}发货</span></v-flex>
 
-                <v-flex md1 xs6 class="text-xs-right text-md-left"><span class="title amount"><span v-bind:class="{'red--text':qo.state == '1','body-2':true}">¥{{qo.amount}}</span></span></v-flex>
+                <v-flex md1 xs6 class="text-xs-right text-md-left">
+                    <span class="title amount">
+                        <span v-bind:class="{'red--text':qo.state == '1','body-2':true}">¥{{qo.amount}}</span>
+                        <br>
+                        <span v-bind:class="{'red--text':qo.state == '1','caption':true}">费¥{{qo.charge}}</span>
+                    </span>
+                    
+                </v-flex>
 
-                <v-flex v-if="qo.refuseReason" offset-xs1 xs12 class="red--text caption"><span>拒绝理由:{{qo.refuseReason}}</span></v-flex>
+                <v-flex v-if="qo.refuseReason" offset-xs1 xs12 class="caption">
+                    <span>拒绝原因:<small class="red--text ">{{qo.reasonType | dict('reasonType')}}</small></span>
+                    <span>拒绝理由:<small class="red--text ">{{qo.refuseReason}}</small></span>
+                </v-flex>
               </v-layout>
                 
             </div>
@@ -43,7 +53,7 @@
               </v-flex>
               <v-flex md2 xs3>
                  <div v-viewer="options" class="images clearfix">
-                            <img :src="product.images" :data-source="product.images" class="image" height="100px">
+                            <img :src="purchaseRoot+product.images" :data-source="purchaseRoot+product.images" class="image" height="100" width="100">
                         </div>
               </v-flex>
               <v-flex xs8>
@@ -73,7 +83,7 @@
                  
               <v-btn  color="secondary" @click="purchase(qo)">代购</v-btn>
               </div>
-              <div v-if="(qo.buyByID == $store.state.User.user.id ) && qo.state == '0'" class="container text-xs-center" color="primary" @click="editQuotation(qo)">
+              <div v-if="(qo.buyByID == $store.state.User.user.id ) && qo.state == '0' && qo.allowRepeat" class="container text-xs-center" color="primary" @click="editQuotation(qo)">
                   <v-btn color="primary">修改</v-btn>
               </div>
               
@@ -84,13 +94,41 @@
 
             <v-dialog v-model="refuseFlag" max-width="290">
       <v-card>
-         <v-card-title><v-switch v-model="repeat" :label="`${repeat?'允许再次报价':'屏蔽该用户'}`"></v-switch></v-card-title>
         <v-card-text>
-          <v-text-field v-model="reason" textarea label="理由" placeholder="价格高？渠道非正品？时间太长？"></v-text-field>
+            <v-switch v-model="allowRepeat" :label="`${allowRepeat?'允许再次报价':'不允许再次报价'}`"></v-switch>
+            <v-radio-group v-model="reasonType" column>
+            <v-radio
+                label="代购费高"
+                color="red"
+                value="0"
+              ></v-radio>
+              <v-radio
+                label="商品价格高"
+                color="red darken-3"
+                value="1"
+              ></v-radio>
+              <v-radio
+                label="渠道非正品"
+                color="indigo"
+                value="2"
+              ></v-radio>
+              <v-radio
+                label="发货时间长"
+                color="indigo darken-3"
+                value="3"
+              ></v-radio>
+              <v-radio
+                label="其他"
+                color="orange"
+                value="4"
+              ></v-radio>
+ 
+            </v-radio-group>
+          <v-text-field v-model="reason"  ref="reason" :rules="reasonRules" required textarea label="详细说明" placeholder="请填写详细说明"></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click.native="refuseFlag = false">取消</v-btn>
+          <v-btn color="grey darken-1" flat="flat" @click.native="refuseFlag = false">取消</v-btn>
           <v-btn color="green darken-1" flat="flat" @click.native="refuse">确认</v-btn>
         </v-card-actions>
       </v-card>
@@ -113,9 +151,16 @@ export default {
     data(){
         return{
             repeat:true,
+                        reason:"",
                 refuseFlag:false,
                 dialog:false,
+                reasonType:"0",
+                allowRepeat:true,
                  opQuotationOrder:{},
+                 reasonRules:[
+                     v => !!v || '还是详细说明一下吧',
+                     v =>(v && v.length >= 10) || '再详细点儿吧 10个字都没有呢'
+                 ]
         }
     },
     methods:{
@@ -133,7 +178,9 @@ export default {
           console.log("purchase quotation",quotation)
         },
         refuse(){ //拒绝该订单
-              this.$http.post("/purch/refuse",{purchaseID:this.purchase.id,quotationID:this.opQuotationOrder.id,reason:this.reason}).then(res=>{
+
+        if (this.$refs.reason.validate()||this.$refs.reason.focus()){
+              this.$http.post("/purch/refuse",{purchaseID:this.purchase.id,quotationID:this.opQuotationOrder.id,reasonType:this.reasonType,reason:this.reason,allowRepeat:this.allowRepeat}).then(res=>{
                 if (res.data.Status){
                   this.refuseFlag = false
                   this.$store.commit("SUCCESS","拒绝该报价成功,重新进入报价中")
@@ -143,6 +190,7 @@ export default {
               }).catch(res=>{
                 this.$store.commit("ERROR",res.data)
               })
+        }
         }
     }
 }
