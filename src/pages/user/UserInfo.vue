@@ -6,9 +6,7 @@
           <v-layout row wrap justify-center align-center>
           <v-flex offset-md4 offset-xs3   md12 xs12 align-center justify-center>
             <br>
-                <croppa v-if="user.avatar" :initial-image="user.avatar+'?'+Number(new Date())" class="upload-btn" @onDraw="onDraw" @init="onInit" :prevent-white-space="true" v-model="croppa" @file-size-exceed="onFileSizeExceed" placeholder="点击上传(小于1M)自定义头像" :accept="'image/*'" :file-size-limit="1024000" :height="125" :width="125" >
-                  <!-- <img slot="placeholder" src="/static/mv9.png"> -->
-
+                <croppa v-if="user.avatar" @image-remove="handleNewImage"  :initial-image="user.avatar+'?'+Number(new Date())" class="upload-btn" @onDraw="onDraw" @init="onInit" :prevent-white-space="true" v-model="croppa" @file-size-exceed="onFileSizeExceed" placeholder="点击上传(小于1M)自定义头像" :accept="'image/*'" :file-size-limit="1024000" :height="125" :width="125" >
                 </croppa>
 
           </v-flex>
@@ -80,12 +78,7 @@
                   <v-text-field :rules="nameRules" required counter="7" v-model="user.nickName" maxlength="7"></v-text-field>
                 </v-flex>
 
-                <v-flex xs4>
-                  <v-subheader>收货地址:</v-subheader>
-                </v-flex>
-                <v-flex xs8>
-                  <v-text-field label="用于物流代购"  counter="25" v-model="user.address" maxlength="25"></v-text-field>
-                </v-flex>
+ 
                 <v-flex md6>
                   <v-btn flat=""  outline="" color="blue" block="" dark="" @click="saveInfo">保存</v-btn>
                 </v-flex>
@@ -118,6 +111,7 @@ import qiniu from 'qiniu'
     mixins: [Mixin],
     data() {
       return {
+        uploadFlag:false,
         avatars:[{"id":"0000","header":"默认"}
 ,{"id":"1000","name":"萝卜","group":"默认","url":"/static/avatar/default.png"}
 ,{"id":"0001","header":"女"}
@@ -209,6 +203,9 @@ import qiniu from 'qiniu'
         ctx.closePath()
       })
       },
+      handleNewImage(){
+                    this.uploadFlag = true
+                },
    onDraw: function (ctx) {
         // ctx.save()
         // ctx.globalAlpha = 0.7
@@ -219,6 +216,7 @@ import qiniu from 'qiniu'
         return new Promise((resolve, reject) => {       
             var that = this
       if (this.croppa.hasImage()) {
+        if (this.uploadFlag){
           //获取上传的token
            this.$http.get("/user/uptoken",{type:'1'}).then(res=>{
              console.log("qntoken",res.data.Data)
@@ -235,7 +233,9 @@ import qiniu from 'qiniu'
                 reject()
               }
            })
-
+        }else{
+          resolve()
+        }
     }else{
       this.$store.commit("INFO","请上传自定义头像")
         reject()

@@ -33,7 +33,10 @@
           </div>
           <div v-if="active == '4'">
             <ModifyPasswd></ModifyPasswd>
-          </div>          
+          </div>  
+                    <div v-if="active == '5'">
+            <Address v-bind:user="user"></Address>
+          </div>         
           </v-flex>
           <v-flex md4 xs12>
           <Ads :textTop="200"></Ads>
@@ -50,6 +53,7 @@
   import UserInfo from './UserInfo'
   import Guarantee from './Guarantee'
   import ModifyPasswd from './ModifyPasswd'
+  import Address from './Address'
 
 import { mapGetters,mapActions} from 'vuex'
 
@@ -59,7 +63,8 @@ import { mapGetters,mapActions} from 'vuex'
       ModifyPasswd,
       Certification,
       UserInfo,
-      Guarantee
+      Guarantee,
+      Address
     },
     data: () => ({
       user:{avatar:""},
@@ -86,6 +91,13 @@ import { mapGetters,mapActions} from 'vuex'
           title: '修改密码',
           id: 4,
           icon: 'fa-key',
+          color: 'primary'
+        }
+        ,
+        {
+          title: '收货地址',
+          id: 5,
+          icon: 'add',
           color: 'primary'
         }
       ]

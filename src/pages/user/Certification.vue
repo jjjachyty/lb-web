@@ -19,7 +19,7 @@
                 </croppa>
 
               </v-flex>
-              <v-flex xs7 md3>
+              <v-flex xs7 md4>
                 <v-subheader>身份证反面</v-subheader>
               </v-flex>
               <v-flex md9>
@@ -101,7 +101,7 @@
                 <v-subheader>{{idCardB.issued_by}}</v-subheader>
               </v-flex>
                 <v-flex xs6 offset-xs3>
-                <v-btn v-show="edit || !certified" block color="primary" outline @click="submit">确定</v-btn>
+                <v-btn v-show="!certified " block color="primary" outline @click="submit">确定</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>

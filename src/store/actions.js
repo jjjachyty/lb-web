@@ -63,6 +63,10 @@ export default {
     async deleteImages({ commit, state }, { keys }) {
         var p = api.delete("/user/images", { bucket: "luobo-article", key: keys })
         return p
+    },
+    getAddress({},params){
+        var url = "http://www.sf-express.com/sf-service-owf-web/service/region/"+params.code+"/subRegions?level="+params.level+"&lang=sc&region=cn&translate="
+        return api.get(url, {})
     }
 
 }
