@@ -1,6 +1,6 @@
 <template>
   <div class="container" >
-    <v-text-field prepend-icon="search" @keyup.enter="serach" v-model="keyWords" solo clearable placeholder="搜索 例：IPhonex 香港"></v-text-field>
+    <v-text-field prepend-inner-icon="search"  @keyup.enter="serach" v-model="keyWords" solo clearable placeholder="搜索 例：IPhonex 香港"></v-text-field>
     <br>
 
     <p class="text-xs-right">

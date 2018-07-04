@@ -33,7 +33,7 @@
                 <v-select 
                 :items="avatars" 
                 v-model="user.anNickName" 
-                label="用于匿名发表爆料" 
+                placeholder="用于匿名发表爆料" 
                 item-text="name" 
                 required
                 no-data-text="没有相应的昵称"
@@ -72,10 +72,10 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-subheader>自定义昵称:</v-subheader>
+                  <v-subheader>个性昵称:</v-subheader>
                 </v-flex>
                 <v-flex xs8>
-                  <v-text-field :rules="nameRules" required counter="7" v-model="user.nickName" maxlength="7"></v-text-field>
+                  <v-text-field :rules="nameRules" placeholder="个性化昵称" required counter="7" v-model="user.nickName" maxlength="7"></v-text-field>
                 </v-flex>
 
  

@@ -14,8 +14,8 @@
               </v-toolbar>
               <v-card-text>
                 <v-form ref="form"  lazy-validation>
-                  <v-text-field prepend-icon="person"  name="login" required label="手机号" @input="$v.user.username.$touch()" @blur="$v.user.username.$touch()" :error-messages="phoneErrors" type="text" v-model="user.username"></v-text-field>
-                  <v-text-field id="password" @keyup.enter.native="submit" prepend-icon="lock" @input="$v.user.password.$touch()" @blur="$v.user.password.$touch()" name="password" label="密码" :error-messages="passwdErrors" type="password" v-model="user.password"></v-text-field>
+                  <v-text-field prepend-icon="person"  name="login" required label="手机号" clearable @input="$v.user.username.$touch()" @blur="$v.user.username.$touch()" :error-messages="phoneErrors" type="text" v-model="user.username"></v-text-field>
+                  <v-text-field id="password" @keyup.enter.native="submit" prepend-icon="lock" clearable @input="$v.user.password.$touch()" @blur="$v.user.password.$touch()" name="password" label="密码" :error-messages="passwdErrors" type="password" v-model="user.password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>

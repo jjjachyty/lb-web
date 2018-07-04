@@ -1,24 +1,22 @@
 <template>
 <v-app>
   <v-layout row>
-    <v-flex offset-md2 md8>
+    <v-flex offset-md1 md9>
   <v-container>
               <v-text-field
          solo
          class="search-txt"
           v-model="keywords"
          clearable
-         prepend-icon="search"
+         prepend-inner-icon="search"
          @blur="search"
          @keyup.enter="search"
          placeholder="请输入关键字">
       </v-text-field>    
    </v-container>
 <br>
+<br>
     <v-layout row wrap="">
-
-
-
       <v-flex xs12 md8>
         <List :articles="serchResults"></List>
       </v-flex>

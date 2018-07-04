@@ -16,7 +16,7 @@
                     <v-layout row align-center justify-center >
                         <v-flex ><v-radio label="设为默认" small :value="indx"></v-radio></v-flex>
                         <v-flex xs4>
-                        <v-btn small icon @click="edit(ads)" ><v-icon small color="primary">edit</v-icon>编辑</v-btn><v-btn small icon ><v-icon small color="warning">delete</v-icon>删除</v-btn>
+                        <v-btn small icon @click="edit(ads)" ><v-icon small color="primary">edit</v-icon>编辑</v-btn><v-btn small icon @click="remove" ><v-icon small color="warning">delete</v-icon>删除</v-btn>
 
                         </v-flex>
                     </v-layout>
@@ -36,7 +36,7 @@
       <v-flex xs4 sm6 md4 d-flex>
 
           <v-autocomplete
-          v-model="editData.province"
+          v-model="addressData.province"
         :items="provinces"
         item-text="name"
         item-value="name"
@@ -55,8 +55,9 @@
           required
           item-text="name"
           item-value="name"
-          v-model="editData.city"
+          v-model="addressData.city"
           label="城市"
+          persistent-hint
           no-data-text="暂无"
 
       >
@@ -69,16 +70,17 @@
           item-text="name"
           required
           item-value="name"
-          v-model="editData.county"
+          persistent-hint
+          v-model="addressData.county"
           label="地区"
           no-data-text="暂无"
         ></v-autocomplete>
       </v-flex>
             <v-flex xs12 sm6 md12 d-flex>
-        <v-text-field  required label="详细地址" v-model="editData.street"></v-text-field>
+        <v-text-field  required label="详细地址" v-model="addressData.street"></v-text-field>
       </v-flex>
       <v-flex md12 xs12 sm6 d-flex>
-            <v-btn outline color="secondary" @click="show = false">取消</v-btn> <v-btn outline color="primary">确定</v-btn>
+            <v-btn outline color="secondary" @click="show = false">取消</v-btn> <v-btn outline color="primary" @click="save">确定</v-btn>
       </v-flex>
                    </v-layout>
                    </v-card-text>
@@ -93,7 +95,7 @@ export default {
         return{
             row:0,
             show:false,
-            editData:{},
+            addressData:{},
             
             provinces:provinces,
             // citys:citys,
@@ -104,7 +106,7 @@ export default {
         citys:function(){
             var provinceCode = 0
             provinces.forEach(element => {
-                if (element.name == this.editData.province){
+                if (element.name == this.addressData.province){
                     provinceCode = element.code
                 }
             });
@@ -121,7 +123,7 @@ export default {
             var filtercountys = new Array()
 
             citys.forEach(element => {
-                if (element.name == this.editData.city){
+                if (element.name == this.addressData.city){
                     cityCode = element.code
                 }
             });
@@ -139,12 +141,30 @@ export default {
             this.show= true
         },
         edit(data){
-            this.show = true
-            this.editData = JSON.parse(JSON.stringify(data)) 
+            this.addressData = JSON.parse(JSON.stringify(data)) 
+                        this.show = true
+
+        },
+        remove(){
+            this.$http.delete("/user/address",this.addressData).then(res=>{
+                    if(res.data.Status){
+                        commit("SUCCESS","修改地址成功")
+                    }
+                })
         },
         save(data){
-            if (data.id){
-
+            if (this.addressData.id){
+                this.$http.put("/user/address",this.addressData).then(res=>{
+                    if(res.data.Status){
+                        commit("SUCCESS","修改地址成功")
+                    }
+                })
+            }else{
+                this.$http.post("/user/address",this.addressData).then(res=>{
+                    if(res.data.Status){
+                        commit("SUCCESS","新增地址成功")
+                    }
+                })
             }
         }
     },created(){
