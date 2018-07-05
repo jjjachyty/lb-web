@@ -14,7 +14,8 @@ export const state = {
         show: false,
         color: 'green',
         message: ''
-    }
+    },
+    headerActive:0
 }
 
 export const mutations = {

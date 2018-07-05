@@ -157,7 +157,7 @@ import {Mixin} from '@/mixins'
       },
       mixins:[Mixin],
       data(){
-          return {dialog:true,
+          return {dialog:false,
           refuseFlag:false,
           timeDialog:false,
           opQuotationOrder:{},

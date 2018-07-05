@@ -1,10 +1,10 @@
 <template>
 
   <v-app>
-    <v-container>
-      <v-navigation-drawer clipped app fixed v-model="drawer" width="220">
+    <div>
+      <v-navigation-drawer clipped app fixed  width="220">
         <v-subheader>查询条件:</v-subheader>
-        <v-container>
+        <div>
           <v-layout row wrap>
             <v-flex>
               <v-text-field v-model="serch.title" prepend-icon="title" label="曝光标题" clearable></v-text-field>
@@ -40,23 +40,23 @@
               </v-dialog>
             </v-flex>
             <v-flex>
-              <v-btn flat outline color="" block @click="serach">筛选
+              <v-btn flat outline color="primary" block @click="serach">筛选
                 <v-icon>filter_list</v-icon>
               </v-btn>
             </v-flex>
 
           </v-layout>
-        </v-container>
+        </div>
       </v-navigation-drawer>
 
 
 
       <v-layout row wrap>
-        <v-flex offset-md8 xs12>
+        <v-flex offset-md7 xs12>
           <small v-if="articles.length > 0" class="grey--text">默认显示最新10条数据,如不满足,请使用左边条件筛选</small>
         </v-flex>
 
-        <v-flex offset-md2 xs12 v-for="(item ,index) in articles" :key="index">
+        <v-flex xs12 md7 offset-md2 v-for="(item ,index) in articles" :key="index">
 
           <v-card v-bind:class="{'article-approval':item.state == 0,'article-adopt':item.state == 1,'article-refuse':item.state == -1}">
             <v-layout row wrap="">
@@ -154,7 +154,7 @@
           <v-icon>add</v-icon>
         </v-btn>
       </v-fab-transition>
-    </v-container>
+    </div>
   </v-app>
 </template>
 

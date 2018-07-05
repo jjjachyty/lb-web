@@ -12,10 +12,11 @@
 
         </v-flex>
         <v-flex xs7 md9>
-          <v-tabs   light  color="transparent">
+                     
+          <v-tabs   light  color="transparent" v-model="$store.state.headerActive">
             <v-tabs-slider color="deep-orange"></v-tabs-slider>
 
-            <v-tab to="/" large flat="">
+            <v-tab to="/" large flat="" @click="$store.state.headerActive = 0">
               <v-icon small>fa-sun</v-icon>爆料填坑</v-tab>
             <v-tab to="/logispurch">
               <v-icon small>fa-shopping-cart</v-icon>物流代购</v-tab>
@@ -49,7 +50,7 @@
                 <v-list-tile-title>爆料</v-list-tile-title>
               </v-list-tile>
 
-              <v-list-tile disabled to="/logispurch">
+              <v-list-tile to="/user/purchases">
                 <v-icon small color="grey">add_shopping_cart</v-icon>
                 <v-list-tile-title>代购</v-list-tile-title>
               </v-list-tile>
@@ -161,7 +162,7 @@ export default {
     margin-left: 4px !important;
 }
 .menu{
-width: 50px;
+/* width: 50px; */
 float: right;
 }
 

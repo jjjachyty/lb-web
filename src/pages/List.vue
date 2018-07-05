@@ -1,6 +1,6 @@
 <template>
 
-          <v-container fluid grid-list-sm>
+          <div>
       <small v-if="articles.length < 1" class="grey--text"><v-icon>mood</v-icon>恭喜，世界还是很美好的,暂无人曝光填坑哦～</small>
      <v-layout row wrap>
          <v-flex xs12 md12 v-for="item in articles" v-bind:key="item.id">
@@ -71,7 +71,7 @@
              </router-link>
          </v-flex>
      </v-layout>
-          </v-container>
+          </div>
 </template>
 <script>
               import {avatarRoot,apiRoot} from '@/config'      

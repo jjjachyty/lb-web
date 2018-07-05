@@ -27,6 +27,9 @@ import Text2 from '@/pages/Text2'
 
 import LogisPurch from '@/pages/logispurch/Main'
 import Purchase from '@/pages/logispurch/Purchase'
+import UserPurchases from '@/pages/logispurch/UserPurchases'
+import UserPurchase from '@/pages/logispurch/UserPurchase'
+
 
 Vue.use(Router)
 
@@ -99,7 +102,17 @@ export default new Router({
             name: 'logispurch',
             component: LogisPurch
 
-        }]
+        },{
+            path: '/user/purchases',
+            name: 'userpurchases',
+            component: UserPurchases
+        },,{
+            path: '/user/purchase',
+            name: 'userpurchase',
+            component: UserPurchase
+        },
+        
+    ]
 
     }, {
         path: '/login',
