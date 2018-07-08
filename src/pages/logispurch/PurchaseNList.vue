@@ -2,12 +2,14 @@
     <v-app>
         <br>
         <!-- <v-content> -->
-        <v-card v-for="p in purchases" :key="p.id" :to="/purchase/+p.id">
+        <span v-if="purchases.length<1" class="caption grey--text">还未发布代购,点击右下角按钮发布一个吧</span>
+        <v-card v-else v-for="(p,index) in purchases" :key="p.id" >
         <br>
+        <router-link :to="/purchase/+p.id">
            <v-layout row>
-               <v-flex md2 xs3>
+               <v-flex md2 xs2>
                    <v-card-media height="100">
-                       <img :src="p.products[0].images">
+                       <img :src="purchaseRoot +p.products[0].images">
                    </v-card-media>
                </v-flex>
                <v-flex xs9 md11>
@@ -34,12 +36,12 @@
                        </v-flex>
                    </v-layout>
                </v-flex>
-           </v-layout>
+           </v-layout></router-link>
            <v-divider></v-divider>
            <v-card-actions >
                <v-spacer></v-spacer>
-               <v-btn color="primary" small outline>编辑</v-btn>
-               <v-btn color="warning" small outline>删除</v-btn>
+               <v-btn color="primary" small outline @click="edit(index)">编辑</v-btn>
+               <v-btn color="warning" small outline @click="remove(index)">删除</v-btn>
            </v-card-actions>
         </v-card>
         <p>加载更多</p>
@@ -47,7 +49,6 @@
 
              <v-fab-transition>
       <v-btn
-        v-model="fab"
         dark
         fab
         fixed
@@ -64,15 +65,22 @@
     </v-app>
 </template>
 <script>
+import {Mixin}  from '@/mixins'
 export default {
+    mixins:[Mixin],
     data(){return{
         purchases:[]
     }},
     methods:{
         addPurchase(){
             this.$router.push("/user/purchase")
-        }
-    },
+        },
+
+    edit(index){
+        console.log("this.purchases[index].id",this.purchases[index].id)
+        this.$router.push({name:"edituserpurchase",params:{id:this.purchases[index].id}})
+    }
+        },
     created(){
         this.$http.get('/user/purchases',{}).then(res=>{
             if(res.data.Status){
@@ -83,3 +91,12 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+
+img {
+    max-width: 95%;
+    max-height: 95%;
+}
+
+</style>

@@ -1,6 +1,9 @@
 <template>
-    <div v-if="purchase">
-                  <v-expansion-panel>
+    <div>
+      <div  v-if="purchase">
+        <small class="grey--text">暂无人报价哦,去右边求代购吧...</small>
+      </div>
+                  <v-expansion-panel v-else>
           <v-expansion-panel-content v-for="(qo,sq) in purchase.quotationOrders" :key="qo.id">
             <div slot="header" v-bind:class="{'grey--text':qo.state == '0'}">
               <v-layout row wrap>

@@ -21,10 +21,10 @@
                     <v-flex>
                       <span>{{item.creator}}</span>
                       <br>
-                      <small class="grey--text">发布于{{item.updateAt|formatDate('YYYY-MM-DD')}}</small>
+                      <small class="grey--text">发布于{{item.createAt|formatDate('YYYY-MM-DD')}}</small>
                       <br>
                       <v-icon small>pin_drop</v-icon>
-                      <span class="caption">{{item.address}}</span>
+                      <span class="caption" v-if="item.address">{{item.address.province}} {{item.address.city}}</span>
 
                       <br>
                     </v-flex>
@@ -71,7 +71,7 @@
 
                     <v-flex md2 xs3 >
                            <div v-viewer="options" class="images clearfix">
-                            <img :src="pd.images" :data-source="pd.images" class="image" height="100px">
+                            <img :src="purchaseRoot+pd.images" :data-source="purchaseRoot+pd.images" class="image" height="100px">
                         </div>
                         <!-- <img :src="pd.images" height="100px" v-viewer> -->
                     
@@ -105,7 +105,7 @@
               <span>
                 <v-chip small :color="item.type == 0?'red':'teal'" label class="white--text">
                   <v-icon small>pin_drop</v-icon>
-                  <span class="caption">{{item.location}}</span>
+                  <span class="caption">{{item.targetLocation}}</span>
                 </v-chip>
               </span>
               <v-spacer></v-spacer>
@@ -120,13 +120,14 @@
           </v-card>
           <br>
           <!-- 报价单-->
-          <v-subheader>报价单</v-subheader>
+          
+          <v-subheader>代购单</v-subheader>
             <QuotationList :purchase="item"></QuotationList>
         </v-flex>
         <v-flex md4>
           <v-card>
             <v-card-title>
-              <span>其他 澳门 代购</span>
+              <span>他们在香港</span>
             </v-card-title>
             <v-card-text>
 
@@ -172,7 +173,7 @@ import {Mixin} from '@/mixins'
       },
     methods:{
         getDetail(id){
-            this.$http.get("/purch/get",{id:this.$route.params.id}).then(res=>{
+            this.$http.get("/purchase",{id:this.$route.params.id}).then(res=>{
                 if(res.data.Status){
                     this.item = res.data.Data
                     this.quotationOrder.products =JSON.parse( JSON.stringify(this.item.products))

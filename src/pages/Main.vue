@@ -1,7 +1,7 @@
 <template>
 <v-app>
   <v-layout row>
-    <v-flex offset-md2 md8>
+    <v-flex offset-md2 md9>
   <div>
               <v-text-field
          solo
@@ -21,7 +21,7 @@
       <v-flex xs12 md8>
         <List :articles="serchResults"></List>
       </v-flex>
-      <v-flex md3>
+      <v-flex md4>
       <Ads :textTop="130"></Ads>
       <Top></Top>
       </v-flex>

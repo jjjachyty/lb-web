@@ -53,7 +53,7 @@
                     </v-chip>
                   </template>
                   <template slot="item" slot-scope="data">
-                    <template v-if="data.item.divider || data.item.header">
+                    <template v-if="data.item.header">
                       <v-list-tile-content v-text="data.item.header"></v-list-tile-content>
                     </template>
                     

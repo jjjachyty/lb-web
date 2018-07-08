@@ -39,80 +39,84 @@ export default new Router({
         path: '/',
         component: Indexs,
         children: [{
-            path: '',
-            name: 'Main',
-            component: Main,
-        }, {
-            path: '/article/:id',
-            name: 'article',
-            component: Article
-        }, {
-            path: '/user/article/:id',
-            name: 'userarticle',
-            component: Article
-        }, {
-            path: '/profile',
-            name: 'profile',
-            beforeEnter: (to, from, next) => {
-                console.log(store.state.token)
-                if (!store.state.auth.token) {
-                    next({ path: '/login' })
-                } else {
-                    next()
-                }
+                path: '',
+                name: 'Main',
+                component: Main,
+            }, {
+                path: '/article/:id',
+                name: 'article',
+                component: Article
+            }, {
+                path: '/user/article/:id',
+                name: 'userarticle',
+                component: Article
+            }, {
+                path: '/profile',
+                name: 'profile',
+                beforeEnter: (to, from, next) => {
+                    console.log(store.state.token)
+                    if (!store.state.auth.token) {
+                        next({ path: '/login' })
+                    } else {
+                        next()
+                    }
 
 
+                },
+                component: Profile
+            }, {
+                path: '/exparticle',
+                name: 'exparticle',
+                component: ExposureArticle,
+                beforeEnter: (to, from, next) => {
+                    console.log(store.state.token)
+                    if (!store.state.auth.token) {
+                        next({ path: '/login' })
+                    } else {
+                        next()
+                    }
+
+
+                },
+            }, {
+                path: '/burst',
+                name: 'burst',
+                component: UserArticle
+            }, {
+                path: '/Text2',
+                name: 'Text2',
+                component: Text2
+
+            }, {
+                path: '/msg',
+                name: 'msg',
+                component: UserMessage
+
+            }, {
+                path: '/logispurch',
+                name: 'logispurch',
+                component: LogisPurch
+
+            }, {
+                path: '/user/purchases',
+                name: 'userpurchases',
+                component: UserPurchases
+            }, , {
+                path: '/purchase/:id',
+                name: 'purchase',
+                component: Purchase
+
+            }, {
+                path: '/user/purchase',
+                name: 'adduserpurchase',
+                component: UserPurchase
+            }, , {
+                path: '/user/purchase/:id',
+                name: 'edituserpurchase',
+                component: UserPurchase
             },
-            component: Profile
-        }, {
-            path: '/exparticle',
-            name: 'exparticle',
-            component: ExposureArticle,
-            beforeEnter: (to, from, next) => {
-                console.log(store.state.token)
-                if (!store.state.auth.token) {
-                    next({ path: '/login' })
-                } else {
-                    next()
-                }
 
-
-            },
-        }, {
-            path: '/burst',
-            name: 'burst',
-            component: UserArticle
-        }, {
-            path: '/purchase/:id',
-            name: 'purchase',
-            component: Purchase
-
-        }, {
-            path: '/Text2',
-            name: 'Text2',
-            component: Text2
-
-        }, {
-            path: '/msg',
-            name: 'msg',
-            component: UserMessage
-
-        }, {
-            path: '/logispurch',
-            name: 'logispurch',
-            component: LogisPurch
-
-        },{
-            path: '/user/purchases',
-            name: 'userpurchases',
-            component: UserPurchases
-        },,{
-            path: '/user/purchase',
-            name: 'userpurchase',
-            component: UserPurchase
-        },
-        
-    ]
+        ]
 
     }, {
         path: '/login',

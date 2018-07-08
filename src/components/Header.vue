@@ -13,10 +13,10 @@
         </v-flex>
         <v-flex xs7 md9>
                      
-          <v-tabs   light  color="transparent" v-model="$store.state.headerActive">
+          <v-tabs   light  color="transparent">
             <v-tabs-slider color="deep-orange"></v-tabs-slider>
 
-            <v-tab to="/" large flat="" @click="$store.state.headerActive = 0">
+            <v-tab to="/" large flat="" >
               <v-icon small>fa-sun</v-icon>爆料填坑</v-tab>
             <v-tab to="/logispurch">
               <v-icon small>fa-shopping-cart</v-icon>物流代购</v-tab>

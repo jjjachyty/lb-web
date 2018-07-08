@@ -427,7 +427,7 @@ this.$router.push("burst")
             },
     },
      created(){
-         this.currentDate = this.getCurrentStr()
+         
          console.log(this.$route.params.edit)
          if (typeof this.$route.params.id == "string"){ //编辑
          this.$http.get("user/exparticle",{id:this.$route.params.id}).then(res=>{

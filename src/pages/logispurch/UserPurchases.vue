@@ -42,6 +42,9 @@
               <div v-if="active == '1'">
                   <PurchaseNList></PurchaseNList>
               </div>
+              <div v-if="active == '3'">
+                  <UserJourney></UserJourney>
+              </div>
          </v-flex>
      </v-layout>
 
@@ -50,9 +53,11 @@
 </template>
 <script>
 import PurchaseNList from './PurchaseNList'
+import UserJourney from './UserJourney'
 export default {
         components:{
-            PurchaseNList
+            PurchaseNList,
+            UserJourney
         },
         data(){
             return{
@@ -71,7 +76,7 @@ export default {
         },
         {
           title: '行程',
-          id: 4,
+          id: 3,
           icon: 'fa-key',
           color: 'primary'
         }

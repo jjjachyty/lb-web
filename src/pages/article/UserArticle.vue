@@ -49,16 +49,18 @@
         </div>
       </v-navigation-drawer>
 
-
-
       <v-layout row wrap>
+        <v-flex md8 offset-md3>
+        <v-layout>
+              <v-card>
+
         <v-flex offset-md7 xs12>
           <small v-if="articles.length > 0" class="grey--text">默认显示最新10条数据,如不满足,请使用左边条件筛选</small>
         </v-flex>
 
-        <v-flex xs12 md7 offset-md2 v-for="(item ,index) in articles" :key="index">
+        <v-flex xs12 md12  v-for="(item ,index) in articles" :key="index">
 
-          <v-card v-bind:class="{'article-approval':item.state == 0,'article-adopt':item.state == 1,'article-refuse':item.state == -1}">
+          <v-card-text v-bind:class="{'article-approval':item.state == 0,'article-adopt':item.state == 1,'article-refuse':item.state == -1}">
             <v-layout row wrap="">
 
                 <v-flex xs10 md11>
@@ -124,18 +126,22 @@
 
 
             </v-layout>
-
-          </v-card>
+          <v-divider></v-divider>
+          </v-card-text>
           <br/>
           <!-- <v-divider></v-divider> -->
         </v-flex>
-
         <v-flex offset-md5 offset-xs3 xs12>
 
           <small v-if="articles.length == 0" class="subheading grey--text">
             <img src="/static/nodata.png">哦吼~没有查询到数据...</small>
         </v-flex>
-      </v-layout>
+      </v-card>
+              </v-layout>
+
+            </v-flex>
+                    </v-layout>
+
 
       <v-dialog v-model="removedialog" persistent max-width="290">
         <v-card>

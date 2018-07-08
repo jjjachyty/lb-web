@@ -1,29 +1,66 @@
 import moment from 'moment'
 import utf8 from 'utf8'
-import { avatarRoot,purchaseRoot } from '@/config'
-
-// 定义一个混入对象
+import { avatarRoot, purchaseRoot } from '@/config'
+const locationID = {
+        '全球': 'all',
+        '香港': 'hk',
+        '澳门': 'mo',
+        '台湾': 'tw',
+        "新加坡": 'sg',
+        "日本": "jp",
+        "韩国": "kr",
+        "泰国": "th",
+        "德国": "de",
+        "英国": "gb",
+        "法国": "fr",
+        "美国": "us",
+        "澳大利亚": "au"
+    }
+    // 定义一个混入对象
 export const Mixin = {
-    data(){
+    data() {
         return {
-            avatarRoot:avatarRoot,
-            purchaseRoot:purchaseRoot,
-            options:{
+            avatarRoot: avatarRoot,
+            purchaseRoot: purchaseRoot,
+            options: {
                 inline: false,
-        button: true,
-        navbar: false,
-        title: false,
-        toolbar: true,
-        tooltip: true,
-        movable: true,
-        zoomable: true,
-        rotatable: true,
-        scalable: true,
-        transition: true,
-        fullscreen: true,
-        keyboard: true,
-        url: 'data-source'
-              }
+                button: true,
+                navbar: false,
+                title: false,
+                toolbar: true,
+                tooltip: true,
+                movable: true,
+                zoomable: true,
+                rotatable: true,
+                scalable: true,
+                transition: true,
+                fullscreen: true,
+                keyboard: true,
+                url: 'data-source'
+            },
+            destinations: [
+                { header: '默认' },
+                { id: 'all', name: '全球', tags: [] },
+                { header: '中国' },
+                { id: 'hk', name: '香港', tags: ['IPhone'] },
+                { "id": "mo", "name": "澳门", "tags": ["IPhone"] },
+                { "id": "tw", "name": "台湾", "tags": [] },
+                { "id": "0000", "header": "亚洲" },
+                { "id": "sg", "name": "新加坡", "tags": [] },
+                { "id": "jp", "name": "日本", "tags": [] },
+                { "id": "kr", "name": "韩国", "tags": [] },
+                { "id": "th", "name": "泰国", "tags": ["RAY面膜"] },
+                { "id": "0000", "header": "欧洲" },
+                { "id": "de", "name": "德国", "tags": [] },
+                { "id": "gb", "name": "英国", "tags": ["YSL"] },
+                { "id": "fr", "name": "法国", "tags": [] },
+                { "id": "0000", "header": "北美洲" },
+                { "id": "us", "name": "美国", "tags": [] },
+                { "id": "0000", "header": "大洋洲" },
+                { "id": "au", "name": "澳大利亚", "tags": [] }
+
+            ],
+            currentDate: this.getCurrentStr()
         }
     },
     created: function() {
@@ -70,6 +107,9 @@ export const Mixin = {
         },
         encodeUtf8(text) {
             return utf8.decode(text)
+        },
+        locationID(name) {
+            return locationID[name]
         }
     }
 }
