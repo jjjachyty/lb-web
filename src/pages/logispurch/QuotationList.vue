@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div  v-if="purchase" class="text-xs-center">
+      <div  v-if="purchase.quotationOrder" class="text-xs-center">
         <small class="grey--text">暂无人报价...</small>
       </div>
                   <v-expansion-panel v-else>
@@ -183,7 +183,7 @@ export default {
         refuse(){ //拒绝该订单
 
         if (this.$refs.reason.validate()||this.$refs.reason.focus()){
-              this.$http.post("/purch/refuse",{purchaseID:this.purchase.id,quotationID:this.opQuotationOrder.id,reasonType:this.reasonType,reason:this.reason,allowRepeat:this.allowRepeat}).then(res=>{
+              this.$http.post("/user/refusequotation",{purchaseID:this.purchase.id,quotationID:this.opQuotationOrder.id,reasonType:this.reasonType,reason:this.reason,allowRepeat:this.allowRepeat}).then(res=>{
                 if (res.data.Status){
                   this.refuseFlag = false
                   this.$store.commit("SUCCESS","拒绝该报价成功,重新进入报价中")

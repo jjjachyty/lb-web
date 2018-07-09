@@ -66,6 +66,16 @@ export const Mixin = {
     created: function() {
 
     },
+    computed: {
+        useType() {
+            var width = window.innerWidth
+            if (width < 960) {
+                return 'mb'
+            } else {
+                return 'pc'
+            }
+        }
+    },
     methods: {
         uuid: function(len, radix) {
             var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');

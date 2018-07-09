@@ -1,9 +1,11 @@
 <template>
     <v-app>
 
-      <v-navigation-drawer clipped  app fixed  width="170">
+
+
+               <v-navigation-drawer app  clipped width="170">
+                   <v-divider></v-divider>
       <v-list>
-        <v-divider></v-divider>
         <v-list-tile v-for="item in items" :key="item.title" @click="active=item.id">
           <v-list-tile-action>
             <v-icon small :color="item.color">{{ item.icon }}</v-icon>
@@ -13,9 +15,8 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+
     </v-navigation-drawer>
-
-
            
     <!-- <v-tabs fixed-tabs grow>
          <v-toolbar fixed absolute app>
@@ -38,7 +39,8 @@
             </v-tab-item>
     </v-tabs> -->
      <v-layout>
-         <v-flex xs12 md5 offset-md2>
+
+         <v-flex xs12 md8 offset-md2>
               <div v-if="active == '1'">
                   <PurchaseNList></PurchaseNList>
               </div>
@@ -48,13 +50,14 @@
          </v-flex>
      </v-layout>
 
-
     </v-app>
 </template>
 <script>
 import PurchaseNList from './PurchaseNList'
 import UserJourney from './UserJourney'
+import {Mixin} from '@/mixins'
 export default {
+    mixins:[Mixin],
         components:{
             PurchaseNList,
             UserJourney

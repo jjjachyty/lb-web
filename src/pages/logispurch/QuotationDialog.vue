@@ -125,7 +125,7 @@ export default {
         var amount  = 0.0
         for (const key in this.quotationOrder.products) {
           if (this.quotationOrder.products.hasOwnProperty(key)) {
-           amount += Number(this.quotationOrder.products[key].price) 
+           amount += Number(this.quotationOrder.products[key].price)* this.quotationOrder.products[key].quantity
             
           }
         }
@@ -175,8 +175,9 @@ export default {
                                              var pd = this.quotationOrder.products[index]
                                              var pdImages = this.productsImages[index]
                                             if (pdImages.imageSet){
+                                              updateCount++
                                                 if ( "" == pd.images){//需要上传
-                                                updateCount++
+                                                
                                                             var pic = pdImages.generateDataUrl('image/png')
                                                             var key = pd.id+"_"+this.$store.state.User.user.id+"_"+index
                                                             this.$store.dispatch("uploadImages",{uploadToken:uploadToken,file:pic,key:key}).then(res=>{
@@ -189,6 +190,11 @@ export default {
                                                                 this.$store.commit('ERROR',"第"+Number(index+1)+"个商品图片上传失败")
                                                                 reject(false)
                                                             })
+                                                }else{
+                                                  successCount++
+                                                                 if (updateCount == successCount){
+                                                                        resolve(true)
+                                                                }
                                                 }
                                                 
                                                 
@@ -216,7 +222,7 @@ export default {
 
                                     if ('add' == this.type) {//新增
                                         this.quotationOrder.purchaseID = this.purchase.id
-                                        this.$http.postJson("/purch/quotation", this.quotationOrder).then(res => {
+                                        this.$http.postJson("/user/quotation", this.quotationOrder).then(res => {
                                         if (res.data.Status) {
                                             console.log("保存报价单", res.data)
                                             this.close()
@@ -231,7 +237,7 @@ export default {
 
                                     }else{// 编辑
                                             this.quotationOrder.purchaseID = this.purchase.id
-                                        this.$http.putJson("/purch/quotation", this.quotationOrder).then(res => {
+                                        this.$http.putJson("/user/quotation", this.quotationOrder).then(res => {
                                         if (res.data.Status) {
                                             console.log("修改报价单", res.data)
                                             

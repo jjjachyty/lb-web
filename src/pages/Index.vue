@@ -17,6 +17,6 @@ Header
 </script>
 <style>
 .main{
-    margin-top: 90px;
+    margin-top: 40px;
 }
 </style>

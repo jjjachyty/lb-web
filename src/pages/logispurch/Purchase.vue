@@ -128,6 +128,7 @@
           <!-- 报价单-->
           
           <v-toolbar height="40" class="body-2 font-weight-medium">代购报价</v-toolbar>
+           <br>
             <QuotationList :purchase="item"></QuotationList>
         </v-flex>
         <v-flex md4>

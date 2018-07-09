@@ -1,6 +1,5 @@
 <template>
     <v-app>
-        <br>
       <div><v-btn color="primary" dark small flat outline @click="addPurchase">新增</v-btn></div>
       
         <!-- <v-content> -->

@@ -29,7 +29,7 @@
           <a @click="toDetail(item)">
           <v-card>
             <v-layout row>
-              <v-flex xs8 md10>
+              <v-flex xs8 md7>
                 <span>
                   <v-chip v-if="item.type=='0'"  small color="red" label class="white--text">
                    求购
@@ -39,13 +39,11 @@
                   </v-chip>
                 </span>
               </v-flex>
-              <v-flex xs4>
-                <span>
+              <v-flex xs4 md5>
                   <v-chip small color="red"  label class="white--text body-2">
                     <div v-if="item.amount"><small class="caption" >预计¥</small>{{item.amount}}</div>
                     <small class="caption" v-else>求报价</small>
                     </v-chip>
-                </span>
               </v-flex>
             </v-layout>
 
