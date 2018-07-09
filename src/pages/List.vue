@@ -116,7 +116,7 @@ text-overflow: ellipsis;/* IE/Safari */
 -ms-text-overflow: ellipsis; 
 -o-text-overflow: ellipsis;/* Opera */ 
 height: 8vh;
-font-size: 0.3em;
+font-size: 12px;
 }
 .articleThumb{
     height: 10px;

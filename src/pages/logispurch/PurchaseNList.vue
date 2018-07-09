@@ -1,15 +1,17 @@
 <template>
     <v-app>
         <br>
+      <div><v-btn color="primary" dark small flat outline @click="addPurchase">新增</v-btn></div>
+      
         <!-- <v-content> -->
-        <span v-if="purchases.length<1" class="caption grey--text">还未发布代购,点击右下角按钮发布一个吧</span>
+        <span v-if="purchases.length<1" class="caption grey--text">还未发布代购,点击[新增]按钮发布一个吧</span>
         <v-card v-else v-for="(p,index) in purchases" :key="p.id" >
         <br>
         <router-link :to="/purchase/+p.id">
            <v-layout row>
-               <v-flex md2 xs2>
-                   <v-card-media height="100">
-                       <img :src="purchaseRoot +p.products[0].images">
+               <v-flex md3 xs4>
+                   <v-card-media height="120">
+                       <img :src="purchaseRoot +p.products[0].images+'?'+Number(new Date())">
                    </v-card-media>
                </v-flex>
                <v-flex xs9 md11>
@@ -41,26 +43,25 @@
            <v-card-actions >
                <v-spacer></v-spacer>
                <v-btn color="primary" small outline @click="edit(index)">编辑</v-btn>
-               <v-btn color="warning" small outline @click="remove(index)">删除</v-btn>
+               <v-btn color="warning" small outline @click="showRemove(index)">删除</v-btn>
            </v-card-actions>
         </v-card>
-        <p>加载更多</p>
+        <div class="text-xs-center">
+            <a  v-if="purchases.length % 10 == 0" ><small>加载更多</small></a>
+            <small v-else class="grey--text">已全部加载</small>
+        </div>
         <!-- </v-content> -->
+  <v-dialog v-model="removeDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="headline">确定删除?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click.native="removeDialog = false">取消</v-btn>
+          <v-btn color="green darken-1" flat @click.native="remove">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-             <v-fab-transition>
-      <v-btn
-        dark
-        fab
-        fixed
-        color="red"
-        bottom
-        small
-        right
-        @click="addPurchase"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-    </v-fab-transition>
 
     </v-app>
 </template>
@@ -69,13 +70,31 @@ import {Mixin}  from '@/mixins'
 export default {
     mixins:[Mixin],
     data(){return{
-        purchases:[]
+        purchases:[],
+        index:null,
+        removeDialog:false,
     }},
     methods:{
         addPurchase(){
             this.$router.push("/user/purchase")
         },
+    showRemove(index){
+        if (this.purchases[index].state == "0"){
+            this.index = index
+            this.removeDialog=true
+        }else{
+            this.$store.commit("ERROR","只能删除状态为[待接单]的代购单")
+        }
+    },
+    remove(){
+                    this.$http.delete("/user/purchase",{id:this.purchases[this.index].id}).then(res=>{
+                        if(res.data.Status){
+                            this.purchases.splice(this.index,1)
+                            this.removeDialog = false
+                        }
+                    })
 
+    },
     edit(index){
         console.log("this.purchases[index].id",this.purchases[index].id)
         this.$router.push({name:"edituserpurchase",params:{id:this.purchases[index].id}})

@@ -1,7 +1,7 @@
 <template>
     <div>
-      <div  v-if="purchase">
-        <small class="grey--text">暂无人报价哦,去右边求代购吧...</small>
+      <div  v-if="purchase" class="text-xs-center">
+        <small class="grey--text">暂无人报价...</small>
       </div>
                   <v-expansion-panel v-else>
           <v-expansion-panel-content v-for="(qo,sq) in purchase.quotationOrders" :key="qo.id">

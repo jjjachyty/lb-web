@@ -171,7 +171,7 @@
 
         <br>
         <!-- <v-content> -->
-        <span v-if="journeys.length<1" class="caption grey--text">打算去哪儿呢</span>
+        <span v-if="journeys.length<1" class="caption grey--text">新增告诉我,打算去哪儿呢</span>
         <v-card v-else v-for="(j,index) in journeys" :key="j.id" v-bind:class="{'grey--text': '0'==j.state}">
         <br>
            <v-layout row>
@@ -207,12 +207,21 @@
            <v-divider></v-divider>
            <v-card-actions >
                <v-spacer></v-spacer>
-               <v-btn color="primary" small outline @click="edit(j)">编辑</v-btn>
-               <v-btn color="warning" small outline @click="remove(index)">删除</v-btn>
+               <v-btn color="primary" small outline @click="edit(index)">编辑</v-btn>
+               <v-btn color="secondary"  small outline @click="showRemove(index)">删除</v-btn>
            </v-card-actions>
         </v-card>
         
-
+  <v-dialog v-model="removeDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="headline">确定删除?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click.native="removeDialog = false">取消</v-btn>
+          <v-btn color="green darken-1" flat @click.native="remove">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     </v-app>
 </template>
@@ -224,6 +233,8 @@ export default {
         journeys:[],
         productsArray:["不限","IPhone","Ray面膜","YSL"],
         journey:{},
+        editIndex:null,
+        removeDialog:false,
         valid:false,
         showStartDate:false,
         showEndDate:false,
@@ -235,15 +246,28 @@ export default {
             this.$router.push("/user/journey")
         },
 
-    edit(data){
-        this.journey = data
+    edit(index){
+        this.journey = JSON.parse(JSON.stringify(this.journeys[index]))
         this.journey.startDate = this.formatDate(this.journey.startDate,'YYYY-MM-DD')
         this.journey.endDate = this.formatDate(this.journey.endDate,'YYYY-MM-DD')
 
         this.dialog = true
     },
-    dict(key){
-            
+    showRemove(index){
+      this.removeDialog = true       
+      this.editIndex = index
+    },
+    remove(){
+      this.$http.delete("/user/journey",{id:this.journeys[this.editIndex].id}).then(res=>{
+        if(res.data.Status){
+          this.journeys.splice(this.editIndex,1)
+          this.$store.commit("SUCCESS","删除成功")
+          this.removeDialog = false
+        }else{
+          this.$store.commit("ERROR",res.data.Error.Err)
+        }
+      })
+      
     },
     save(){
         if (this.$refs.form.validate()) {
@@ -252,14 +276,18 @@ export default {
                 this.$http.put("/user/journey",this.journey).then(res=>{
                   if(res.data.Status){
                       this.$store.commit("SUCCESS","保存成功")
+                      this.journeys[this.editIndex] = this.journey
                       this.dialog = false
                   }
               })
             }else{//新增
               this.$http.post("/user/journey",this.journey).then(res=>{
                   if(res.data.Status){
+                    this.journeys.unshift(res.data.Data)
                       this.$store.commit("SUCCESS","保存成功")
                       this.dialog = false
+                  }else{
+                      this.$store.commit("ERROR",res.data.Error.Err)
                   }
               })
 

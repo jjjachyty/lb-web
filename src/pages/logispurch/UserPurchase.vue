@@ -108,14 +108,16 @@
                 </v-flex>
                 <v-flex xs12 md12>
                     <v-card>
-                        <v-card-title>商品清单 <span class="title red--text" v-if="amount > 0">¥{{amount}}</span><v-spacer></v-spacer> <v-btn small icon @click="addProduct"><v-icon small>add</v-icon>新增</v-btn></v-card-title>
+                            <v-toolbar height="40">
+                            商品清单 <span class="title red--text" v-if="amount > 0">¥{{amount}}</span><v-spacer></v-spacer> <v-btn small icon @click="addProduct"><v-icon small>add</v-icon>新增</v-btn>
+                            </v-toolbar>
                         <v-card v-for="(pd,index) in purchaseData.products" :key="pd.id">
                             <v-layout row wrap align-center justify-end>
-                                <v-flex  xs4  md2 >
-                                <croppa v-model="productsImages[index]" @image-remove="handleRemoveImage(pd)" :initial-image="purchaseRoot+pd.images+'?'+Number(new Date())" :accept="'image/*'"  :width="100"  :file-size-limit="1024000"  placeholder="上传商品图片">
+                                <v-flex  xs12  md3 class="text-xs-center">
+                                <croppa initial-size="contain" :prevent-white-space="true" v-model="productsImages[index]" @image-remove="handleRemoveImage(pd)" :initial-image="purchaseRoot+pd.images+'?'+Number(new Date())" :accept="'image/*'"    :file-size-limit="1024000"  placeholder="上传商品图片">
                                 </croppa>
                                 </v-flex>
-                                <v-flex xs8 md10>
+                                <v-flex xs12 md9>
                                     <v-layout row wrap>
                                         <v-flex xs6 md3>
                                             <v-text-field  v-model="pd.name" :rules="[v => !!v || '不能为空']" label="名称" placeholder="商品名称"></v-text-field>
@@ -293,8 +295,11 @@ export default {
 
 <style scoped>
 
-img {
+/* img {
     max-width: 90%;
     max-height: 90%;
+} */
+canvas{
+    max-width:100%
 }
 </style>

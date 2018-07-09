@@ -69,7 +69,7 @@ export default {
           color: 'primary'
         },
         {
-          title: '代购',
+          title: '代购单',
           id: 2,
           icon: 'how_to_reg',
           color: 'primary'

@@ -114,9 +114,9 @@ background-color: white;
   box-sizing: content-box;
   background-color: #fff;
 }
-.container{
+/* .container{
   padding-top:24px;
-}
+} */
 .full-logo{
   display: none;
 }
@@ -127,9 +127,9 @@ background-color: white;
   box-sizing: content-box;
   background-color: #fff;
 }
-.container{
+/* .container{
   padding:24px;
-}
+} */
 
 }
 @media screen and (min-width: 1264px)  and (max-width: 1904px){
@@ -138,9 +138,9 @@ background-color: white;
   box-sizing: content-box;
   background-color: #fff;
 }
-.container{
+/* .container{
   padding:0 10% 0 10%;
-}
+} */
 
 }
 @media screen and (min-width: 1904px){
@@ -149,9 +149,9 @@ background-color: white;
   box-sizing: content-box;
   background-color: #fff;
 }
-.container{
+/* .container{
   padding:3% 20% 0 20%;
-}
+} */
 
 }
 </style>

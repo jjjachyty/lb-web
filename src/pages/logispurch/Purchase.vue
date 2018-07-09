@@ -11,7 +11,7 @@
 
                 <v-flex xs8 md10>
                   <v-layout row>
-                    <v-flex xs4 md2>
+                    <v-flex xs4 md1>
                       <v-avatar size="50">
                         <img :src="avatarRoot+item.createBy">
                       </v-avatar>
@@ -35,8 +35,12 @@
 
                 <v-flex xs3 md2>
                   <span>
-                    <v-chip small color="red" outline label class="white--text body-2">
-                      <small class="caption">¥</small>{{item.amount}}</v-chip>
+                    <v-chip small color="red"  label class="white--text body-2">
+                      <div v-if="amount>0"><small class="caption">¥</small>{{item.amount}}
+                      </div>
+                      <div v-else><small class="caption">求报价</small>
+                      </div>
+                      </v-chip>
                       <small class="red--text">{{item.state | dict('purchaseState')}}</small>
                   </span>
 
@@ -44,6 +48,7 @@
               </v-layout>
               <!-- <v-avatar><img :src="avatarRoot+item.createBy"></v-avatar> -->
             </v-card-title>
+            <v-divider></v-divider>
             <!-- <v-card-media height="250">
               <carousel class="img-detail" :mouseDrag="true">
                 <slide v-for="(img,index) in item.detailImgURLs" :key="index">
@@ -54,24 +59,25 @@
               </carousel>
             </v-card-media> -->
 
-            <v-card-text class="grey--text">
-              {{item.content}}
+            <v-card-text class="grey--text content">
+              <v-subheader>备注说明:</v-subheader>
+              <v-container>{{item.content}}</v-container>
             </v-card-text>
 
             <v-card-text>
-              <v-subheader>商品清单：</v-subheader>
-              <v-card>
+              <v-toolbar height="30" class="body-2 font-weight-medium">商品清单：</v-toolbar>
+              <v-card >
                 <div v-for="(pd,index) in item.products" :key="pd.id">
                   <v-card-title>
                     <span class="title red--text">{{index+1}}.</span>
                     <v-spacer></v-spacer>
                     <small class="red--text">¥{{pd.quantity * pd.price}}</small>
                   </v-card-title>
-                  <v-layout>
+                  <v-layout row justify-center>
 
                     <v-flex md2 xs3 >
                            <div v-viewer="options" class="images clearfix">
-                            <img :src="purchaseRoot+pd.images" :data-source="purchaseRoot+pd.images" class="image" height="100px">
+                            <img :src="purchaseRoot+pd.images+'?'+Number(new Date())" :data-source="purchaseRoot+pd.images+'?'+Number(new Date())" class="image" >
                         </div>
                         <!-- <img :src="pd.images" height="100px" v-viewer> -->
                     
@@ -79,17 +85,17 @@
                     <v-flex md10 xs10>
                       <v-layout row wrap class="caption">
                         <v-flex xs6 md4>名称:
-                          <small class="grey--text">{{pd.name}}</small>
+                          <small class="font-weight-medium">{{pd.name}}</small>
                         </v-flex>
                         <v-flex xs6 md4>参考单价:
                           <small class="red--text">¥{{pd.price}}</small>
                         </v-flex>
                         <v-flex xs6 md4>数量:
-                          <small class="grey--text">{{pd.quantity}}</small>
+                          <small class="font-weight-medium">{{pd.quantity}}</small>
                         </v-flex>
                         <!-- <v-flex xs6 md4>购买渠道:{{pd.shopName}}</v-flex> -->
                         <v-flex xs12>描述:
-                          <small class="grey--text">{{pd.describe}}</small>
+                          <small class="grey--text font-weight-medium">{{pd.describe}}</small>
                         </v-flex>
                       </v-layout>
 
@@ -99,7 +105,7 @@
                   <v-divider></v-divider>
                 </div>
               </v-card>
-            </v-card-text>
+          </v-card-text>
 
             <v-card-actions>
               <span>
@@ -121,16 +127,16 @@
           <br>
           <!-- 报价单-->
           
-          <v-subheader>代购单</v-subheader>
+          <v-toolbar height="40" class="body-2 font-weight-medium">代购报价</v-toolbar>
             <QuotationList :purchase="item"></QuotationList>
         </v-flex>
         <v-flex md4>
           <v-card>
             <v-card-title>
-              <span>他们在香港</span>
+              他们在{{item.targetLocation}}
             </v-card-title>
             <v-card-text>
-
+              <LocationUser :destination="item.targetLocation"></LocationUser>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -148,13 +154,15 @@ import 'viewerjs/dist/viewer.css'
 import { Carousel, Slide } from 'vue-carousel';
 import QuotationList from './QuotationList'
 import QuotationDialog from './QuotationDialog'
+import LocationUser from './LocationUser'
 import {Mixin} from '@/mixins'
   export default {
       components:{
           Carousel,
            Slide,
            QuotationList,
-           QuotationDialog
+           QuotationDialog,
+           LocationUser
       },
       mixins:[Mixin],
       data(){
@@ -216,11 +224,11 @@ import {Mixin} from '@/mixins'
     }
 }
 </script>
-<style>
-.img-detail{
+<style scoped>
+/* .img-detail{
     width: 100%;
     height: auto;
-}
+} */
 .card__media img{
     height: 100px;
     width: 100px;
@@ -232,7 +240,15 @@ padding: 0 1% 0 6%;
   margin-bottom: 10px;
   /* box-shadow: 0px 0px 0px 0.1px grey !important */
 }
+
 .amount{
   float: right;
+}
+.image{
+      max-width: 90%;
+    max-height: 90%;
+}
+.content{
+  word-wrap: break-word;
 }
 </style>

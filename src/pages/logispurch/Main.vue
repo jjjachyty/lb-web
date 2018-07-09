@@ -15,7 +15,10 @@
 
         </v-tab-item>
                 <v-tab-item id="purch"> -->
-                       <List></List>
+                    <v-layout>
+                        <v-flex md8 offset-md2><List></List></v-flex>
+                       
+                    </v-layout>
         <!-- </v-tab-item>
         </v-tabs> -->
          
