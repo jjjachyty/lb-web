@@ -56,6 +56,8 @@
     </v-app>
 </template>
 <script>
+import {Mixin} from '@/mixins'
+
 import PurchaseNList from './PurchaseNList'
 import UserJourney from './UserJourney'
 import UserQuotation from './UserQuotation'

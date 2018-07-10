@@ -118,7 +118,7 @@
 import {Mixin} from '@/mixins'
 import { validationMixin } from 'vuelidate'
 export default {
-    props:['quotationOrder','dialog','purchase','type'],
+    props:['quotationOrder','dialog','purchase','index'],
     mixins:[Mixin],
         computed:{
       orderAmount: function () {
@@ -220,14 +220,13 @@ export default {
                      if (this.$refs.form.validate()) {
                          this.handerProductImgs().then(flag=>{
 
-                                    if ('add' == this.type) {//新增
+                                    if (!this.index) {//新增
                                         this.quotationOrder.purchaseID = this.purchase.id
                                         this.$http.postJson("/user/quotation", this.quotationOrder).then(res => {
                                         if (res.data.Status) {
                                             console.log("保存报价单", res.data)
                                             this.close()
-                                            this.purchase.quotationOrders.push(this.quotationOrder)
-                                            
+                                            this.$emit('updateOrders', res.data.Data)
                                         } else {
                                             this.$store.commit("ERROR", res.data.Error.Err)
                                         }
@@ -242,6 +241,7 @@ export default {
                                             console.log("修改报价单", res.data)
                                             
                                             this.close()
+                                            this.$emit('updateOrders', this.quotationOrder)
                                         } else {
                                             this.$store.commit("ERROR", res.data.Error.Err)
                                         }

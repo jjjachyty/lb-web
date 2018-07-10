@@ -126,10 +126,10 @@
           </v-card>
           <br>
           <!-- 报价单-->
-          
-          <v-toolbar height="40" class="body-2 font-weight-medium">代购报价</v-toolbar>
-           <br>
+
+          <v-card-title height="40" class="body-2 font-weight-medium">代购报价</v-card-title>
             <QuotationList :purchase="item"></QuotationList>
+
         </v-flex>
         <v-flex md4>
           <v-card>
@@ -143,7 +143,7 @@
         </v-flex>
       </v-layout>
    
-   <QuotationDialog :quotationOrder="quotationOrder" :dialog="dialog" :type="'add'" :purchase="item" @closeDialog="closeDialog"></QuotationDialog>
+   <QuotationDialog @updateOrders="updateOrders" :quotationOrder="quotationOrder" :dialog="dialog" :type="false" :purchase="item" @closeDialog="closeDialog"></QuotationDialog>
     
 
 
@@ -191,8 +191,16 @@ import {Mixin} from '@/mixins'
 
             })
         },
-        closeDialog(){
+        closeDialog(data){
           this.dialog = false
+        },
+        updateOrders(data,index){
+          if (index){
+          this.item.quotationOrders[index]= data
+          }else{
+          this.item.quotationOrders.push(data)
+
+          }
         },
         purchase(quotation){
             console.log("purchase quotation",quotation)
@@ -205,7 +213,7 @@ import {Mixin} from '@/mixins'
             flag = false
          }
          this.item.quotationOrders && this.item.quotationOrders.forEach(pd => {
-           if (pd.buyByID == this.$store.state.User.user.id){
+           if (pd.createBy == this.$store.state.User.user.id){
              flag = false
            }
          });

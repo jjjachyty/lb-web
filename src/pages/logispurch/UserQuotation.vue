@@ -1,7 +1,7 @@
 <template>
     <v-app>
         
-        <v-container>
+        <v-container grid-list-xs>
             <div v-if="items.length == 0" class="text-xs-center grey--text">
                 <small >空空如也,赶紧去接[求代购单]吧</small>
             </div>
@@ -16,9 +16,12 @@
                         </v-flex>
                         <v-flex xs10>
                             <v-layout row wrap>
-                                <v-flex xs12>
-                                    单号:{{item.id}} <small class="red--text">{{item.state|dict('quotationType')}}</small>
+                                <v-flex xs10>
+                                    单号:{{item.id}}
                                 </v-flex>
+                                <v-flex xs2>
+                                    <small class="red--text">{{item.state|dict('quotationType')}}</small>
+                                </v-flex >
                                 <v-flex xs6>
                                     <div>总价<small class="red--text body-2">¥{{item.amount}}</small></div> 
                                 </v-flex>

@@ -86,7 +86,7 @@
                  
               <v-btn  color="secondary" @click="purchase(qo)">代购</v-btn>
               </div>
-              <div v-if="(qo.buyByID == $store.state.User.user.id ) && qo.state == '0' && qo.allowRepeat" class="container text-xs-center" color="primary" @click="editQuotation(qo)">
+              <div v-if="(qo.buyByID == $store.state.User.user.id ) && qo.state == '0' && qo.allowRepeat" class="container text-xs-center" color="primary" @click="editQuotation(index)">
                   <v-btn color="primary">修改</v-btn>
               </div>
               
@@ -137,7 +137,7 @@
       </v-card>
     </v-dialog>
 
-   <QuotationDialog :quotationOrder="opQuotationOrder" :dialog="dialog" :type="'edit'" :purchase="purchase" @closeDialog="closeDialog"></QuotationDialog>
+   <QuotationDialog :quotationOrder="opQuotationOrder" :dialog="dialog" :type="editIndex" :purchase="purchase" @closeDialog="closeDialog"></QuotationDialog>
 
     </div>
 </template>
@@ -158,6 +158,7 @@ export default {
                 refuseFlag:false,
                 dialog:false,
                 reasonType:"0",
+                editIndex:null,
                 allowRepeat:true,
                  opQuotationOrder:{},
                  reasonRules:[
@@ -170,11 +171,12 @@ export default {
         closeDialog(){
           this.dialog = false
         },
-        editQuotation(quotation){
-            this.opQuotationOrder = JSON.parse(JSON.stringify(quotation) )
+        editQuotation(index){
+            this.opQuotationOrder = JSON.parse(JSON.stringify(purchase.quotationOrders[index]) )
              this.opQuotationOrder.expiryTime = null
              this.opQuotationOrder.deliveryTime = null
             this.dialog = true
+            this.editIndex = index
         },showRefuse(quotation){ //显示拒绝订单对话框
         this.refuseFlag = true
           this.opQuotationOrder = quotation
