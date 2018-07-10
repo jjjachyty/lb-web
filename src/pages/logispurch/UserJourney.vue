@@ -188,8 +188,8 @@
                <v-flex xs9 md11>
                    <v-layout row wrap>
                        <v-flex xs12 md8>
-                           <span class="title">{{j.startDate | formatDate('YYYY-MM-DD') }}</span>至
-                           <span class="title">{{j.endDate | formatDate('YYYY-MM-DD') }}</span>
+                           <span class="body-2">{{j.startDate | formatDate('YYYY-MM-DD') }}</span>至
+                           <span class="body-2">{{j.endDate | formatDate('YYYY-MM-DD') }}</span>
                            <small v-if="'0'==j.state">已过期</small>
                        </v-flex>
                         <v-flex xs12 md8>

@@ -96,8 +96,11 @@ export const Mixin = {
 
             return uuid.join('');
         },
-        string2Date(src) {
-            return moment(src, "YYYY-MM-DD").toDate()
+        string2Date(src,layout) {
+            if ("" == layout){
+                layout = "YYYY-MM-DD"
+            }
+            return moment(src, layout).toDate()
         },
         formatDate(src, layout) {
             return moment(src).format(layout)

@@ -9,7 +9,7 @@
               <v-layout row wrap>
 
                                 <v-flex md1 xs2>
-                <v-avatar size="40"><img :src="avatarRoot+qo.buyByID"></v-avatar>
+                <v-avatar size="40"><img :src="avatarRoot+qo.createBy"></v-avatar>
                 
                   </v-flex>
 
@@ -18,7 +18,7 @@
 
                 <v-flex md4 xs4>
                   <v-layout row wrap>
-                    <v-flex md12 xs12 >{{qo.buyByName}}</v-flex>
+                    <v-flex md12 xs12 >{{qo.creator}}</v-flex>
                      <v-flex md4 xs12>
                        <v-icon small>pin_drop</v-icon><small class="caption grey--text">重庆</small>
                        <!-- /<small class="caption grey--text">3单</small> -->
