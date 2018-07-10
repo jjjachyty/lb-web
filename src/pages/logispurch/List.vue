@@ -1,25 +1,30 @@
 <template>
   <div class="" >
+
+
+
+
+
     <v-layout>
       <v-flex offset-md3 md5>
         <v-text-field  prepend-inner-icon="search" :clear-icon-cb="clear" @keyup.enter="serach" v-model="keyWords" solo clearable placeholder="搜索 例：IPhonex 香港"></v-text-field>
       </v-flex>
     </v-layout>
 
-    <p class="text-xs-right">
-      <v-btn-toggle v-model="purchType">
-        <v-btn  small color="red" class="white--text">
+    <!-- <p class="text-xs-right">
+       <v-btn-toggle v-model="purchType" >
+        <v-btn  small :value="0" color="red" class="white--text" @click="sort">
            时间
                      <v-icon>arrow_drop_down</v-icon>
             </v-btn>
-        <v-btn small color="teal" class="white--text">金额
+        <v-btn small color="teal" :value="1" class="white--text" @click="sort">金额
           <v-icon>arrow_drop_down</v-icon>
         </v-btn>
       </v-btn-toggle>
-      <v-btn icon>
+       <v-btn icon outline color="primary" @click="filter = !filter">
         <v-icon>filter_list</v-icon>
-      </v-btn>
-    </p>
+      </v-btn> 
+    </p> -->
     <v-container grid-list-lg>
       <div class="text-xs-center">
       <small v-if="items.length < 1" class="grey--text">没有<small class="red--text">{{keyWords}}</small>有关的数据,建议更换搜索试试</small>
@@ -29,15 +34,15 @@
           <a @click="toDetail(item)">
           <v-card>
             <v-layout row>
-              <v-flex xs8 md7>
-                <span>
+              <v-flex xs8 md10>
+                <!-- <span>
                   <v-chip v-if="item.type=='0'"  small color="red" label class="white--text">
                    求购
                   </v-chip>
                   <v-chip  v-else small color="teal" label class="white--text">
                    代购
                   </v-chip>
-                </span>
+                </span> -->
               </v-flex>
               <v-flex xs4 md5>
                   <v-chip small color="red"  label class="white--text body-2">
@@ -64,7 +69,7 @@
               </v-avatar>
               <v-spacer></v-spacer>
               <v-icon small>pin_drop</v-icon>
-              <span class="caption grey--text">{{item.targetLocation}}</span>
+              <span class="caption grey--text">{{item.destination}}</span>
             </v-card-actions>
 
           </v-card>
@@ -90,6 +95,8 @@ export default {
         purchType:0,
         keyWords:"",
         items:[],
+        filter:false,
+        filters:{},
         avatarRoot:avatarRoot
       }
     },
@@ -146,7 +153,7 @@ align-content: center;
   overflow: scroll;
 }
 .content{
-    max-height: 150px;
+    max-height: 20px;
     overflow:hidden;
     word-wrap: break-word;
     max-width: 100%;

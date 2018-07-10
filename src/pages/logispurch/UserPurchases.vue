@@ -44,6 +44,9 @@
               <div v-if="active == '1'">
                   <PurchaseNList></PurchaseNList>
               </div>
+              <div v-if="active == '2'">
+                  <UserQuotation></UserQuotation>
+              </div>
               <div v-if="active == '3'">
                   <UserJourney></UserJourney>
               </div>
@@ -55,24 +58,25 @@
 <script>
 import PurchaseNList from './PurchaseNList'
 import UserJourney from './UserJourney'
-import {Mixin} from '@/mixins'
+import UserQuotation from './UserQuotation'
 export default {
     mixins:[Mixin],
         components:{
             PurchaseNList,
-            UserJourney
+            UserJourney,
+            UserQuotation
         },
         data(){
             return{
                 active:1,
                       items: [{
-          title: '求带',
+          title: '求代购',
           id: 1,
           icon: 'assignment_ind',
           color: 'primary'
         },
         {
-          title: '代购单',
+          title: '报价单',
           id: 2,
           icon: 'how_to_reg',
           color: 'primary'

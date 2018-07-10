@@ -137,7 +137,7 @@
               他们在{{item.targetLocation}}
             </v-card-title>
             <v-card-text>
-              <LocationUser :destination="item.targetLocation"></LocationUser>
+              <LocationUser v-if="item.targetLocation" :destination="item.targetLocation"></LocationUser>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -218,6 +218,7 @@ import {Mixin} from '@/mixins'
                 this.getDetail(this.$route.params.id)
             }else{
                 this.item = this.$route.params.item
+                this.quotationOrder.products =JSON.parse( JSON.stringify(this.item.products))
             }
     },
     watch:{

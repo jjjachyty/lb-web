@@ -4,6 +4,7 @@ moment.locale();
 const rechargeType = { 0: "银行转账", 1: "微信", 2: "支付宝" }
 const purchaseState = { 0: "待接单", 1: "待支付", 2: "已确认", 3: "已购买", 4: "已发货" }
 const reasonType = { "0": "代购费高", "1": "商品价格高", "2": "渠道非正品", "3": "发货时间长", "4": "其他" }
+const quotationType = { "0": "被拒绝", "-1": "失效", "1": "待支付" }
 
 
 
@@ -23,6 +24,10 @@ Vue.filter('dict', function(value, key) {
         case 'reasonType':
             console.log("reasonType", value, key)
             return reasonType[value]
+            break;
+            case 'quotationType':
+            console.log("quotationType", value, key)
+            return quotationType[value]
             break;
         default:
             break;

@@ -21,7 +21,8 @@
 
 
                        <v-flex xs6 md2>
-                          <p class="title red--text">¥{{p.amount}}</p>
+                          <p class="title red--text" v-if="p.amount > 0">¥{{p.amount}}</p>
+                          <p class="title red--text" v-else>求报价</p>
                        </v-flex>
                         <v-flex class="caption red--text font-weight-bold" xs6 md1>
                            {{p.state | dict('purchaseState')}}

@@ -7,7 +7,7 @@
                     
                       <v-flex xs12 md6>
                 <v-autocomplete
-                v-model="purchaseData.targetLocation"
+                v-model="purchaseData.destination"
                 :items="destinations" 
                 placeholder="指定代购地"
                 label="代购地"
@@ -164,9 +164,9 @@ export default {
             productsImages:[],
             valid:false,
             address:[],
-            targetLocation:null,
+            destination:null,
             defaultAddress:"",
-            purchaseData:{address:null,targetLocation:"",products:[]},
+            purchaseData:{address:null,destination:"",products:[]},
 
         }
     }  ,      computed:{
