@@ -16,7 +16,7 @@
     <br>
            <v-footer  class="footer">
             <v-spacer></v-spacer>
-            ICP备案中...
+            渝ICP备 18009430
       &copy; 2018 4T(For Travel)
      <a @click="showSuggest=true">意见反馈</a>
                             <v-spacer></v-spacer>

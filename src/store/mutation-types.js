@@ -19,3 +19,5 @@ export const USER_MESSAGE = 'USER_MESSAGE'
 export const INFO = "INFO"
 export const ERROR = "ERROR"
 export const SUCCESS = "SUCCESS"
+
+export const ID_CARD_VALID = "ID_CARD_VALID"

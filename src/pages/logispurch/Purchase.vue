@@ -12,10 +12,12 @@
                 <v-flex xs8 md10>
                   <v-layout row>
                     <v-flex xs4 md1>
+                      <v-badge overlap>
                       <v-avatar size="50">
                         <img :src="avatarRoot+item.createBy">
                       </v-avatar>
-
+                      <span slot="badge" v-if="$store.state.User.user.idCardValid">实</span>
+                      </v-badge>
 
                     </v-flex>
                     <v-flex>
@@ -111,11 +113,11 @@
               <span>
                 <v-chip small :color="item.type == 0?'red':'teal'" label class="white--text">
                   <v-icon small>pin_drop</v-icon>
-                  <span class="caption">{{item.targetLocation}}</span>
+                  <span class="caption">{{item.destination}}</span>
                 </v-chip>
               </span>
               <v-spacer></v-spacer>
-              <v-btn small outline color="red" @click="dialog=true" v-if="purchaseFlag">代购报价</v-btn>
+              <v-btn small outline color="red" @click="goPurchase" v-if="purchaseFlag">我要代购</v-btn>
 
               <br>
             </v-card-actions>
@@ -128,19 +130,34 @@
           <!-- 报价单-->
 
           <v-card-title height="40" class="body-2 font-weight-medium">代购报价</v-card-title>
-            <QuotationList :purchase="item"></QuotationList>
+           
+            <QuotationList  v-if="item.quotationOrders" :purchase="item"></QuotationList>
+             <small v-else>暂无人报价,</small>
 
         </v-flex>
-        <v-flex md4>
+        <v-flex md4 v-if="item.createBy == $store.state.User.user.id">
           <v-card>
             <v-card-title>
-              他们在{{item.targetLocation}}
+              他们在 <span class="primary--text font-weight-medium">{{item.destination}}</span>
             </v-card-title>
+            <v-divider></v-divider>
             <v-card-text>
-              <LocationUser v-if="item.targetLocation" :destination="item.targetLocation"></LocationUser>
+              <DestinationUser v-if="item.destination" :destination="item.destination" :purchase="item"></DestinationUser>
             </v-card-text>
           </v-card>
         </v-flex>
+        <v-flex md4 v-else>
+          <v-card>
+            <v-card-title>
+              其他<span class="primary--text font-weight-medium">{{item.destination}}</span>求购单
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <DestinationPurchase v-if="item.destination" :destination="item.destination" :purchase="item"></DestinationPurchase>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+
       </v-layout>
    
    <QuotationDialog @updateOrders="updateOrders" :quotationOrder="quotationOrder" :dialog="dialog" :type="false" :purchase="item" @closeDialog="closeDialog"></QuotationDialog>
@@ -155,7 +172,8 @@ import 'viewerjs/dist/viewer.css'
 import { Carousel, Slide } from 'vue-carousel';
 import QuotationList from './QuotationList'
 import QuotationDialog from './QuotationDialog'
-import LocationUser from './LocationUser'
+import DestinationUser from './DestinationUser'
+import DestinationPurchase from './DestinationPurchase'
 import {Mixin} from '@/mixins'
   export default {
       components:{
@@ -163,7 +181,8 @@ import {Mixin} from '@/mixins'
            Slide,
            QuotationList,
            QuotationDialog,
-           LocationUser
+           DestinationUser,
+           DestinationPurchase
       },
       mixins:[Mixin],
       data(){
@@ -190,6 +209,18 @@ import {Mixin} from '@/mixins'
             }).catch(res=>{
 
             })
+        },
+        goPurchase(){
+          if (this.$store.state.auth.token){
+            this.dialog = true
+          }else{
+            this.$store.commit("INFO","请先登录后再代购哦")
+            this.$router.replace({
+                        name: 'login',
+                        query: { redirect: this.$router.currentRoute.fullPath }
+                    })
+          }
+          
         },
         closeDialog(data){
           this.dialog = false

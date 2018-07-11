@@ -80,7 +80,10 @@ this.msgs.forEach((item,index)=>{
             }
             this.$http.put("/user/msg",{updateType:updateType,messageids:updateItems}).then(res=>{
                 if (res.data.Status){
-                                    this.$store.commit("SUCCESS","已全部标记为已读")
+                    console.log("全部已读")
+                                    // this.$store.commit("SUCCESS","已全部标记为已读")
+                }else{
+                    console.log(res.data.Error.Err)
                 }
             }).catch(res=>{
                 this.$store.commit("ERROR",res.data)

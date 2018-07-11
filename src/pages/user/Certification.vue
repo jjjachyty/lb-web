@@ -13,7 +13,7 @@
                 <v-subheader>身份证正面</v-subheader>
               </v-flex>
               <v-flex md9>
-                <croppa v-model="idCard1" :accept="'image/*'" @new-image-drawn="handleNewImage(1)" height="125" placeholder="" image-border-radius="50">
+                <croppa v-model="idCard1" :accept="'image/*'" @new-image-drawn="handleNewImage(1)" :height="125" placeholder="" image-border-radius="50">
                   <img slot="placeholder" src="/static/idcard1.png">
 
                 </croppa>
@@ -23,7 +23,7 @@
                 <v-subheader>身份证反面</v-subheader>
               </v-flex>
               <v-flex md9>
-                <croppa v-model="idCard2" :accept="'image/*'" height="125" placeholder="" @new-image-drawn="handleNewImage(2)" image-border-radius="50">
+                <croppa v-model="idCard2" :accept="'image/*'" :height="125" placeholder="" @new-image-drawn="handleNewImage(2)" image-border-radius="50">
                   <img slot="placeholder" src="/static/idcard2.png">
                 </croppa>
               </v-flex>
@@ -40,7 +40,7 @@
 
         <v-flex md12>
         <v-card>
-          <v-card-title class="subheading">身份信息（<span>{{certified==true?'认证通过':'待认证' }}）</span><v-spacer><v-btn flat="" color="primary" outline="" @click="edit = !edit" v-if="!edit && certified">重新认证</v-btn></v-spacer></v-card-title>
+          <v-card-title class="subheading">身份信息（<span>{{certified==true?'认证通过':'待认证' }}）</span></v-card-title>
           <v-divider></v-divider>
           <v-card-text>
             <v-layout row wrap>
@@ -175,6 +175,7 @@
                       this.errorMessage="认证成功"
                       this.edit=false
                       this.certified=true
+                      this.$store.commit("ID_CARD_VALID")
                   })
         }else{
           this.showError = true
@@ -191,9 +192,9 @@
         }).then(res => {
           console.log("idCardOCR then", res)
           if (1 == val){
-            this.idCardF = res.idCard
+            this.idCardF = res.data.Data.idCard
           }else{
-            this.idCardB = res.idCard
+            this.idCardB = res.data.Data.idCard
           }
           
         }).catch(res => {

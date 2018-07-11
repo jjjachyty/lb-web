@@ -71,6 +71,9 @@ const mutations = {
         state.user.anNickName = user.anNickName
 
     },
+    [types.ID_CARD_VALID](state) {
+        state.user.idCardValid = true
+    },
     [types.USER_MESSAGE](state, data) {
         state.user.msgs = data
     },

@@ -68,7 +68,7 @@
               <v-list-tile to="/msg">
                 <v-badge>
                   <v-icon small="">mail</v-icon>
-                  <span>消息</span>
+                  <span>通知</span>
                   <span v-if="newMsg>0" overlap slot="badge">{{newMsg}}</span>
 
                 </v-badge>

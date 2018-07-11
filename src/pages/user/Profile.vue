@@ -20,7 +20,7 @@
     </v-navigation-drawer>
         <v-layout row wrap>
          
-          <v-flex md8 xs12>
+          <v-flex offset-md1 md6 xs12>
           <div v-if="active == '1'">
             <UserInfo v-bind:user="user"></UserInfo>
 
@@ -38,7 +38,7 @@
             <Address v-bind:user="user"></Address>
           </div>         
           </v-flex>
-          <v-flex md4 xs12>
+          <v-flex offset-md1 md4 xs12>
           <Ads :textTop="200"></Ads>
           </v-flex>
         </v-layout>

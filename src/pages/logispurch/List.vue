@@ -64,9 +64,12 @@
             </v-card-title>
 
             <v-card-actions>
-              <v-avatar size="20">
+              <v-badge overlap>
+              <v-avatar size="30">
                 <img :src="avatarRoot+item.createBy">
               </v-avatar>
+              <span slot="badge">实</span>
+              </v-badge>
               <v-spacer></v-spacer>
               <v-icon small>pin_drop</v-icon>
               <span class="caption grey--text">{{item.destination}}</span>
