@@ -21,3 +21,4 @@ export const ERROR = "ERROR"
 export const SUCCESS = "SUCCESS"
 
 export const ID_CARD_VALID = "ID_CARD_VALID"
+export const ACTIVE_HEADER = "ACTIVE_HEADER"

@@ -41,7 +41,7 @@ export default new Vuex.Store({
         filter(value) {
             console.log("value.payload", value)
 
-            if ({ "REGISTER_SUCCESS": true, "LOGIN_SUCCESS": true, "LOGOUT": true, "GET_USER_PROFILE_SUCCESS": true, "REFRESH_USER": true }[value.type]) {
+            if ({ "ACTIVE_HEADER": true, "REGISTER_SUCCESS": true, "LOGIN_SUCCESS": true, "LOGOUT": true, "GET_USER_PROFILE_SUCCESS": true, "REFRESH_USER": true }[value.type]) {
                 console.log(true)
 
                 return true

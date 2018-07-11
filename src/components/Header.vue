@@ -13,13 +13,13 @@
         </v-flex>
         <v-flex xs7 md9>
                      
-          <v-tabs   light  color="transparent">
+          <v-tabs :value="$store.state.headerActive"  light  color="transparent">
             <v-tabs-slider color="deep-orange"></v-tabs-slider>
 
-            <v-tab to="/" large flat="" >
+            <v-tab to="/" large flat=""  @click="currentMod(0)">
               <v-icon small>fa-sun</v-icon>爆料填坑</v-tab>
-            <v-tab to="/logispurch">
-              <v-icon small>fa-shopping-cart</v-icon>物流代购</v-tab>
+            <v-tab to="/logispurch" @click="currentMod(1)">
+              <v-icon small >fa-shopping-cart</v-icon>物流代购</v-tab>
             <v-tab disabled>
               <v-icon small>fa-exchange-alt</v-icon>转卖</v-tab>
             <v-tab disabled>
@@ -124,6 +124,9 @@ export default {
         home(){
             this.$router.push("/")
         },
+        currentMod(index){
+          this.$store.commit("ACTIVE_HEADER",index)
+        }
     },
     created(){
       console.log("this.$store.state.auth.token && !this.$store.state.User.user.id",this.$store.state.auth.token && !this.$store.state.User.user.id)

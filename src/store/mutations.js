@@ -33,7 +33,9 @@ export const mutations = {
     [types.REGISTER_SUCCESS](state, data) {
         // state.token = data.token
     },
-
+    [types.ACTIVE_HEADER](state, index) {
+        state.headerActive = index
+    },
     [types.INFO](state, text) {
         state.snackbar = { show: true, color: "deep-orange lighten-1", message: text }
             // setTimeout((state) => {
