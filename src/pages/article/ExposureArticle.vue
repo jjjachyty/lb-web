@@ -99,7 +99,7 @@
                     <v-text-field  prepend-icon="place" :error-messages="locationErrors"  v-model="aritcle.location" label="发生地" required placeholder="例:美国纽约 xx平台xx店"></v-text-field>
                         </v-flex>
                         <v-flex xs6 md6>
-                    <v-text-field prepend-icon="domain" :error-messages="tagetErrors" v-model="aritcle.taget" label="爆料对象(请具体以方便定位)" required placeholder="例:东大街666号汽车店/1栋3单元308张三"></v-text-field>
+                    <v-text-field prepend-icon="domain" :error-messages="domainErrors" v-model="aritcle.domain" label="爆料对象(请具体以方便定位)" required placeholder="例:东大街666号汽车店/1栋3单元308张三"></v-text-field>
                         </v-flex>
                     <v-flex xs6 md6>
                     <v-text-field prepend-icon="receipt" :error-messages="wastageErrors" v-model="aritcle.wastage" required label="造成损失" placeholder="例:损失金额5000元"></v-text-field>
@@ -157,7 +157,7 @@ export default {
       tags:{required},
       location:{required},
       occurrenceDate:{required},
-      taget:{required},
+      domain:{required},
       wastage:{required}
       },
       
@@ -188,10 +188,10 @@ export default {
         !this.$v.aritcle.location.required && errors.push('发生地不能为空')
         return errors
       },
-      tagetErrors(){
+      domainErrors(){
         const errors = []
-        if (!this.$v.aritcle.taget.$dirty) return errors
-        !this.$v.aritcle.taget.required && errors.push('曝光对象不能为空')
+        if (!this.$v.aritcle.domain.$dirty) return errors
+        !this.$v.aritcle.domain.required && errors.push('曝光对象不能为空')
         return errors
       },      
       wastageErrors(){

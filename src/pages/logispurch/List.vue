@@ -93,8 +93,16 @@ export default {
     components:{
         Carousel,Slide
     },
+    metaInfo() { 
+      return {
+        title: this.title,
+        meta:this.meta
+      }
+    },
      data () {
       return {
+        title:"求代购列表",
+        meta:[],
         purchType:0,
         keyWords:"",
         items:[],
@@ -118,12 +126,35 @@ export default {
       this.$http.get("/purchases",params).then(res=>{
         if (res.data.Status){
           this.items = res.data.Data
+          var description = new Array()
+          var keywords = new Array()
+          this.items.forEach(element => {
+
+             if(-1 == keywords.indexOf(element.destination)){
+                keywords.push(element.destination)
+              }
+
+            element.products.forEach(pd=>{
+              if (-1 ==description.indexOf(element.destination+'代购'+pd.name)){
+                description.push(element.destination+'代购'+pd.name)
+              }
+              if(-1 == keywords.indexOf(pd.name)){
+                keywords.push(pd.name)
+              }
+            })
+
+
+          });
+          this.meta.push({name:"keywords",content:keywords})
+          this.meta.push({name:"description",description})
         }
       })
       }
     }
     ,created(){
       this.query()
+    },mounted(){
+      this.$store.dispatch("seo")
     }
 }
 </script>

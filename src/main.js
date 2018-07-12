@@ -12,6 +12,8 @@ import Croppa from 'vue-croppa';
 import 'vue-croppa/dist/vue-croppa.css';
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import MetaInfo from 'vue-meta-info'
+
 //图片预览
 import Viewer from 'v-viewer'
 Vue.use(Viewer)
@@ -19,6 +21,7 @@ Vue.use(Viewer)
 import VueShowdown from 'vue-showdown'
 Vue.component('VueShowdown', VueShowdown)
 
+Vue.use(MetaInfo)
 // use
 Vue.use(mavonEditor)
 Vue.use(Croppa);

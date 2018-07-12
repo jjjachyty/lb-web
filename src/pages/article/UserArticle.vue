@@ -13,7 +13,7 @@
               <v-text-field v-model="serch.place" prepend-icon="place" label="发生地点" clearable></v-text-field>
             </v-flex>
             <v-flex>
-              <v-text-field v-model="serch.taget" prepend-icon="domain" label="发生对象" clearable></v-text-field>
+              <v-text-field v-model="serch.domain" prepend-icon="domain" label="发生对象" clearable></v-text-field>
             </v-flex>
             <v-flex>
 
@@ -83,7 +83,7 @@
                     <v-flex xs12>
                       <v-layout row wrap>
                         <v-flex xs12 md4 class="caption">
-                          <v-icon small color="">domain</v-icon> {{item.taget}}</v-flex>
+                          <v-icon small color="">domain</v-icon> {{item.domain}}</v-flex>
                         <v-flex xs6 md4 class="caption">
                           <v-icon small color="">date_range</v-icon>{{item.occurrenceDate | formatDate("YYYY-MM-DD")}}</v-flex>
                         <v-flex xs6 md4 class="caption">
@@ -182,7 +182,7 @@ mixins:[Mixin],
             serch:{
                 title:"",
                 place:"",
-                taget:"",
+                domain:"",
                 beginDate:"",
                 endDate:""
             },

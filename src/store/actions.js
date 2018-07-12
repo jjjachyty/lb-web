@@ -28,7 +28,7 @@ export default {
     async uploadImages({ commit }, { uploadToken, file, key }) {
         var that = this
         return new Promise((resolve, reject) => {
-            var qiniuUpUrl = "http://upload-z2.qiniu.com/putb64/-1/key/"
+            var qiniuUpUrl = "https://upload-z2.qiniu.com/putb64/-1/key/"
 
 
             var pic = file.split(',')[1];
@@ -64,9 +64,22 @@ export default {
         var p = api.delete("/user/images", { bucket: "luobo-article", key: keys })
         return p
     },
-    getAddress({},params){
-        var url = "http://www.sf-express.com/sf-service-owf-web/service/region/"+params.code+"/subRegions?level="+params.level+"&lang=sc&region=cn&translate="
-        return api.get(url, {})
+
+    seo(){
+
+
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+
+
     }
 
 }

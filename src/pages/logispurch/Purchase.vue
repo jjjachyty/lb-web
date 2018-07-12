@@ -185,8 +185,16 @@ import {Mixin} from '@/mixins'
            DestinationPurchase
       },
       mixins:[Mixin],
+          metaInfo() { 
+      return this.metaInfo
+    },
       data(){
-          return {dialog:false,
+          return {
+            metaInfo:{
+            title:"",
+            meta:[]
+            },
+          dialog:false,
           refuseFlag:false,
           timeDialog:false,
           opQuotationOrder:{},
@@ -205,6 +213,13 @@ import {Mixin} from '@/mixins'
                 if(res.data.Status){
                     this.item = res.data.Data
                     this.quotationOrder.products =JSON.parse( JSON.stringify(this.item.products))
+                    // 处理metainfo
+                    var productNames = new Array()
+                    this.item.products.forEach(elt=>{
+                      productNames.push(elt.name)
+                    })
+                    
+                    this.metaInfo.title=item.destination+'代购'+productNames
                 }
             }).catch(res=>{
 
@@ -258,6 +273,14 @@ import {Mixin} from '@/mixins'
             }else{
                 this.item = this.$route.params.item
                 this.quotationOrder.products =JSON.parse( JSON.stringify(this.item.products))
+
+                                    // 处理metainfo
+                    var productNames = new Array()
+                    this.item.products.forEach(elt=>{
+                      productNames.push(elt.name)
+                    })
+                    
+                    this.metaInfo.title=this.item.destination+'代购'+productNames
             }
     },
     watch:{

@@ -24,7 +24,7 @@
                         <v-icon small color="blue darken-2">pin_drop</v-icon>
           <span class="">{{article.location}}</span>
               <v-icon small color="red darken-2">domain</v-icon>
-          <span class="">{{article.taget}}</span>
+          <span class="">{{article.domain}}</span>
           <!-- &nbsp; <router-link class="caption" to="itsme">这是我</router-link> -->
             </v-card-title>
             <v-card-title>
@@ -288,8 +288,15 @@ import Ads from '@/pages/Ads'
 import {avatarRoot,apiRoot} from '@/config'
   export default {
       components:{Ads},
+      metaInfo() { 
+      return {
+        title: this.article.title,
+        meta:this.meta
+      }
+    },
     data() {
       return {
+        meta:[],
         more:true,
         url:avatarRoot,
         tipOffFlag:false,
@@ -438,6 +445,9 @@ import {avatarRoot,apiRoot} from '@/config'
 
       }
     },
+    mounted(){
+
+    },
     created (){
 
          var id = this.$route.params.id
@@ -467,6 +477,10 @@ import {avatarRoot,apiRoot} from '@/config'
            console.log("ressssssss",res)
             if (res.data.Status){
               this.article = res.data.Data
+              this.meta.push({name:"keyWords",content:this.article.location})
+              this.meta.push({name:"keyWords",content:this.article.domain})
+              this.meta.push({name:"keyWords",content:this.article.tags})
+              this.meta.push({name:"description",content:this.article.title})
            }else{
              this.$store.commit("ERROR",res.data.Error.Err)
              this.$router.push("/")

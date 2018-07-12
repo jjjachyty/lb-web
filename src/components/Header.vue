@@ -55,6 +55,12 @@
                 <v-list-tile-title>代购</v-list-tile-title>
               </v-list-tile>
 
+
+              <v-list-tile to="/user/order">
+                <v-icon small color="grey">list</v-icon>
+                <v-list-tile-title>订单</v-list-tile-title>
+              </v-list-tile>
+
               <!-- <v-list-tile disabled to="/logispurch">
         <v-icon small color="grey">add_shopping_cart</v-icon>
           <v-list-tile-title>转卖</v-list-tile-title>

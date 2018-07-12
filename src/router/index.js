@@ -29,12 +29,13 @@ import LogisPurch from '@/pages/logispurch/Main'
 import Purchase from '@/pages/logispurch/Purchase'
 import UserPurchases from '@/pages/logispurch/UserPurchases'
 import UserPurchase from '@/pages/logispurch/UserPurchase'
-
+//订单
+import UserOrder from '@/pages/order/Main'
 
 Vue.use(Router)
 
 export default new Router({
-    // mode: 'history',
+    mode: 'history',
     routes: [{
         path: '/',
         component: Indexs,
@@ -110,10 +111,14 @@ export default new Router({
                 path: '/user/purchase',
                 name: 'adduserpurchase',
                 component: UserPurchase
-            }, , {
+            }, {
                 path: '/user/purchase/:id',
                 name: 'edituserpurchase',
                 component: UserPurchase
+            }, {
+                path: '/user/order',
+                name: 'userorder',
+                component: UserOrder
             },
 
         ]
