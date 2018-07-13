@@ -29,7 +29,7 @@
               <small class="">{{tag}}</small>
             </v-chip><br/>
             
-         <small class="caption createAt">发布于:{{item.createAt | formatDate("YYYY-MM-DD")}}</small>
+         <small class="caption createAt grey--text">发布于:{{item.createAt | formatDate("YYYY-MM-DD")}}</small>
             
                  <v-card-text id="content" class="content" >
 
@@ -104,10 +104,7 @@ export default {
         }
     },
     mounted(){
-
-    },
-    created(){
-        var keyWords = new Array()
+                var keyWords = new Array()
         var titles = new Array()
         
         this.articles.forEach(element => {
@@ -118,6 +115,10 @@ export default {
         });
         this.meta.push({name:'keyWords',content:keyWords})
         this.title = titles
+        console.log("keyWords",keyWords,"titles",titles)
+    },
+    created(){
+
     }
 }
 </script>

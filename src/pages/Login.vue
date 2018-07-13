@@ -3,7 +3,7 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
+          <v-flex xs12 sm8 md3>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary" class="white--text">
                 <v-toolbar-title><a href='/' class="white--text">4T&nbsp;<small class="caption">_为美好旅行</small></a></v-toolbar-title>
@@ -19,7 +19,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn flat="" to="forgot" class="white--text caption">忘记密码?</v-btn>
+                <v-btn flat="" to="forgot"  class="primary--text caption">忘记密码?</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary"  outline @click="submit"  :disabled="this.$v.$invalid">登录</v-btn>
               </v-card-actions>

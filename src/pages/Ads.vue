@@ -1,16 +1,19 @@
 <template>
-  <v-carousel hide-controls hide-delimiters class="ads">
+<v-card class="card">
+  <v-carousel  hide-controls hide-delimiters class="v-carousel">
     <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="i">
-      <small class="white--text"> 广告</small>
+            <small class="white--text tips"> 广告</small>
+
       <router-link :to="item.url">
-        <p v-bind:style="{marginTop:textTop +'px'}" class="white--text text-xs-center ads-text" >{{item.text}}</p>
+        <p class="white--text text-xs-center ads-text" >{{item.text}}</p>
       </router-link>
     </v-carousel-item>
   </v-carousel>
+</v-card>
 </template>
 <script>
   export default {
-      props: ['textTop'],
+      props: ['textTop','height'],
     data () {
       return {
         items: [
@@ -25,7 +28,22 @@
   }
 </script>
 <style scoped>
-
+.v-carousel {
+    text-align:center;
+    height: auto;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.tips{
+  float: left;
+}
+.ads-text{
+  padding-top: 20%;
+  padding-bottom: 20%
+}
 
 </style>
 

@@ -20,7 +20,6 @@ export const state = {
 
 export const mutations = {
     [types.LOGIN_SUCCESS](state, data) {
-        console.log("LOGIN_SUCCESS", data)
         state.auth.token = data.token
         state.auth.expire = data.expire
     },

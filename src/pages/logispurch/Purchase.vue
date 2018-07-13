@@ -35,16 +35,16 @@
 
                 </v-flex>
 
-                <v-flex xs3 md2>
-                  <span>
+                <v-flex xs4 md2>
+                  <p>
                     <v-chip small color="red"  label class="white--text body-2">
                       <div v-if="amount>0"><small class="caption">¥</small>{{item.amount}}
                       </div>
                       <div v-else><small class="caption">求报价</small>
                       </div>
                       </v-chip>
-                      <small class="red--text">{{item.state | dict('purchaseState')}}</small>
-                  </span>
+                      <small class="caption red--text">{{item.state | dict('purchaseState')}}</small>
+                  </p>
 
                 </v-flex>
               </v-layout>
@@ -89,12 +89,16 @@
                         <v-flex xs6 md4>名称:
                           <small class="font-weight-medium">{{pd.name}}</small>
                         </v-flex>
-                        <v-flex xs6 md4>参考单价:
-                          <small class="red--text">¥{{pd.price}}</small>
-                        </v-flex>
                         <v-flex xs6 md4>数量:
                           <small class="font-weight-medium">{{pd.quantity}}</small>
                         </v-flex>
+                        <v-flex xs6 md4>参考渠道:
+                          <small class="red--text">¥{{pd.shopName}}</small>
+                        </v-flex>
+                        <v-flex xs6 md4>参考单价:
+                          <small class="red--text">¥{{pd.price}}</small>
+                        </v-flex>
+
                         <!-- <v-flex xs6 md4>购买渠道:{{pd.shopName}}</v-flex> -->
                         <v-flex xs12>描述:
                           <small class="grey--text font-weight-medium">{{pd.describe}}</small>

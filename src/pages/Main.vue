@@ -1,28 +1,28 @@
 <template>
 <v-app>
-  <v-layout row>
-    <v-flex offset-md2 md9>
-  <div>
+  <v-layout row justify-center>
+    <v-flex offset-md2 md9 xs12>
+  <v-layout row="">
+    <v-flex md5 offset-xs2 xs8>
               <v-text-field
          solo
-         class="search-txt"
           v-model="keywords"
          clearable
-        
+          
          prepend-inner-icon="search"
          @blur="search"
          @keyup.enter="search"
-         placeholder="请输入关键字">
-      </v-text-field>    
-   </div>
-<br>
-<br>
+         placeholder="请输入查询关键字">
+      </v-text-field> 
+    </v-flex>   
+   </v-layout>
+
     <v-layout row wrap="">
       <v-flex xs12 md8>
         <List :articles="serchResults"></List>
       </v-flex>
       <v-flex md4>
-      <Ads :textTop="130"></Ads>
+      <Ads></Ads>
       <Top></Top>
       </v-flex>
 
@@ -92,17 +92,8 @@ export default {
 </script>
 
 <style scoped>
-.ads{
-  
-    height: 300px;
-}
 
 
-  .search-txt{
-      margin-left: 10%;
-      height: 20px;
-      width: 80%;
-  }
 
 </style>
 

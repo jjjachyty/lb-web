@@ -163,7 +163,10 @@ export default {
 </script>
 
 <style scoped>
-
+.nologin{
+      margin-right: -10px;
+    float: right;
+}
 .logo{
  text-align: center;
      width: 130px;

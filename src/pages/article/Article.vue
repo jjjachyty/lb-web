@@ -454,7 +454,7 @@ import {avatarRoot,apiRoot} from '@/config'
          var url = this.$route.name == "userarticle"?"/user/article/":"/article/"
           if ("" != this.$store.state.auth.token){
                              //获取我的点赞
-         this.$http.get("/user/thumbups",{articleID:id}).then(res=>{
+         this.$http.get("/thumbups",{articleID:id}).then(res=>{
            if(res.data.Status){
              this.thumbups = res.data.Data
              res.data.Data.forEach((item)=>{

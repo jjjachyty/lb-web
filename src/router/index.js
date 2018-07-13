@@ -35,7 +35,7 @@ import UserOrder from '@/pages/order/Main'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [{
         path: '/',
         component: Indexs,
